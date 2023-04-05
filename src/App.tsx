@@ -1,15 +1,23 @@
-import { Text, Button, Stack } from "@mantine/core";
+import { AppShell, Button, Container } from "@mantine/core";
 import { ThemeProvider } from "./ThemeProvider";
+import { styled } from "./config/stitches.config";
+
+const StyledButton = styled(Button, {
+  color: "$gray500",
+});
+
+const Layout = styled(AppShell, {
+  background: "$gray900",
+});
 
 export default function App() {
   return (
     <ThemeProvider>
-      <Stack align="center" mt={50}>
-        <Text size="xl" weight={500}>
-          Welcome to Mantine!
-        </Text>
-        <Button>Click the button</Button>
-      </Stack>
+      <Layout>
+        <Container size="sm">
+          <div>All elements inside Container are Containered</div>
+        </Container>
+      </Layout>
     </ThemeProvider>
   );
 }
