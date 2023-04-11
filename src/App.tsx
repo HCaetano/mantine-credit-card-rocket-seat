@@ -1,35 +1,7 @@
-import {
-  ActionIcon,
-  AppShell,
-  Container,
-  Flex,
-  Text,
-  TextInput,
-} from "@mantine/core";
+import { ActionIcon, Flex, Text } from "@mantine/core";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { ThemeProvider } from "./ThemeProvider";
-import { styled } from "./config/stitches.config";
-import theme from "./config/mantineTheme";
-
-const ContainerThemed = styled(Container, {
-  background: theme.colors.gray[8],
-});
-
-const AppShellThemed = styled(AppShell, {
-  background: theme.colors.gray[9],
-});
-
-const TextInputThemed = styled(TextInput, {
-  "& .mantine-TextInput-input": {
-    background: theme.colors.gray[9],
-    color: theme.colors.gray[1],
-    padding: "12px",
-  },
-
-  "& ::placeholder": {
-    color: theme.colors.gray[3],
-  },
-});
+import { AppShellThemed, ContainerThemed, TextInputThemed } from "./styles";
 
 export default function App() {
   return (
@@ -38,7 +10,7 @@ export default function App() {
         <ContainerThemed p={32} size="sm">
           <Flex direction="column" gap="xl" maw={328}>
             <Flex direction="column">
-              <Text color={theme.colors.gray[1]} size="sm" weight={500}>
+              <Text color="gray" size="sm" weight={500}>
                 Número do cartão
               </Text>
               <TextInputThemed placeholder="4716 8039 02" />
@@ -61,8 +33,13 @@ export default function App() {
                   <Text color="gray" size="sm" weight={500}>
                     CVV
                   </Text>
-                  <ActionIcon radius="xl" size="xs" variant="filled">
-                    <IconQuestionMark />
+                  <ActionIcon
+                    color="gray.3"
+                    radius="xl"
+                    size="xs"
+                    variant="filled"
+                  >
+                    <IconQuestionMark color="black" />
                   </ActionIcon>
                 </Flex>
                 <TextInputThemed maw={130} placeholder="***" />
