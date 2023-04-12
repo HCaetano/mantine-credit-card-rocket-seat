@@ -1,13 +1,5 @@
-import { AppShell, Container, TextInput } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 import { styled } from "./config/stitches.config";
-
-export const ContainerThemed = styled(Container, {
-  background: "$gray800",
-});
-
-export const AppShellThemed = styled(AppShell, {
-  background: "$gray900",
-});
 
 export const TextInputThemed = styled(TextInput, {
   "& .mantine-TextInput-input": {

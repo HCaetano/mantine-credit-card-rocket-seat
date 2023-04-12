@@ -1,13 +1,25 @@
-import { ActionIcon, Button, Flex, Text } from "@mantine/core";
+import { ActionIcon, Box, Button, Center, Flex, Text } from "@mantine/core";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { ThemeProvider } from "./ThemeProvider";
-import { AppShellThemed, ContainerThemed, TextInputThemed } from "./styles";
+import { TextInputThemed } from "./styles";
 
 export default function App() {
   return (
     <ThemeProvider>
-      <AppShellThemed>
-        <ContainerThemed p={32} size="sm">
+      <Center
+        sx={(theme) => ({
+          backgroundColor: theme.colors.gray[9],
+          height: "100vh",
+        })}
+      >
+        <Box
+          sx={(theme) => ({
+            backgroundColor: theme.colors.gray[8],
+            height: 420,
+            padding: 32,
+            width: 720,
+          })}
+        >
           <Flex>
             <Flex direction="column" gap="xl" maw={328}>
               <Flex direction="column">
@@ -47,6 +59,7 @@ export default function App() {
                 </Flex>
               </Flex>
             </Flex>
+            <Flex direction="column" maw={280}></Flex>
           </Flex>
           <Button
             color="purple.0"
@@ -57,8 +70,8 @@ export default function App() {
           >
             <Text size="lg">Adicionar cartão</Text>
           </Button>
-        </ContainerThemed>
-      </AppShellThemed>
+        </Box>
+      </Center>
     </ThemeProvider>
   );
 }
