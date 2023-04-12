@@ -1,4 +1,4 @@
-import { ActionIcon, Flex, Text } from "@mantine/core";
+import { ActionIcon, Button, Flex, Text } from "@mantine/core";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { ThemeProvider } from "./ThemeProvider";
 import { AppShellThemed, ContainerThemed, TextInputThemed } from "./styles";
@@ -48,6 +48,15 @@ export default function App() {
               </Flex>
             </Flex>
           </Flex>
+          <Button
+            color="purple.0"
+            fullWidth
+            p={16}
+            mt={48}
+            styles={{ root: { height: "auto" } }}
+          >
+            <Text size="lg">Adicionar cartão</Text>
+          </Button>
         </ContainerThemed>
       </AppShellThemed>
     </ThemeProvider>
