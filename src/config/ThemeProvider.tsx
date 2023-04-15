@@ -1,5 +1,5 @@
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
-import theme from "./config/mantineTheme";
+import theme from "./mantineTheme";
 
 export const newTheme: MantineThemeOverride = {
   ...theme,
