@@ -18,7 +18,7 @@ import VisaLogo from "./assets/Visa.svg";
 import { TextInputCustom } from "./components";
 
 export default function App() {
-  const [isError, setIsError] = useState(true);
+  const [isError, setIsError] = useState(false);
 
   return (
     <ThemeProvider>
