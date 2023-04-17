@@ -31,7 +31,6 @@ export default function App() {
         <Box
           sx={(theme) => ({
             backgroundColor: theme.colors.gray[8],
-            height: 420,
             padding: 32,
             width: 720,
           })}
@@ -42,7 +41,7 @@ export default function App() {
                 <Text color="gray" size="sm" weight={500}>
                   Número do cartão
                 </Text>
-                <TextInput
+                <TextInputCustom
                   error={isError ? "Número inválido" : ""}
                   placeholder="4716 8039 02"
                 />
@@ -155,7 +154,27 @@ export default function App() {
             fullWidth
             p={16}
             mt={48}
-            styles={{ root: { height: "auto" } }}
+            styles={(theme) => ({
+              root: {
+                boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
+                color: theme.colors.gray[0],
+                height: "auto",
+
+                "&:disabled": {
+                  backgroundColor: theme.colors.purple[0],
+                  color: theme.colors.gray[0],
+                  opacity: 0.5,
+                },
+
+                "&:focus": {
+                  border: `2px solid ${theme.colors.gray[0]}`,
+                },
+
+                "&:hover": {
+                  backgroundColor: theme.colors.purple[1],
+                },
+              },
+            })}
           >
             <Text size="lg">Adicionar cartão</Text>
           </Button>
