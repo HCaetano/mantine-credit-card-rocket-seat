@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   ActionIcon,
   Box,
@@ -6,16 +7,19 @@ import {
   Flex,
   Image,
   Text,
+  TextInput,
 } from "@mantine/core";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { ThemeProvider } from "./config/ThemeProvider";
-import TextInputCustom from "./components/TextInputCustom";
 import { HiddenInformation } from "./styles";
 import ContactlessPayment from "./assets/Contactless-payment.svg";
 import SafetySymbol from "./assets/Safety-symbol.svg";
 import VisaLogo from "./assets/Visa.svg";
+import { TextInputCustom } from "./components";
 
 export default function App() {
+  const [isError, setIsError] = useState(false);
+
   return (
     <ThemeProvider>
       <Center
@@ -27,7 +31,6 @@ export default function App() {
         <Box
           sx={(theme) => ({
             backgroundColor: theme.colors.gray[8],
-            height: 420,
             padding: 32,
             width: 720,
           })}
@@ -38,20 +41,29 @@ export default function App() {
                 <Text color="gray" size="sm" weight={500}>
                   Número do cartão
                 </Text>
-                <TextInputCustom placeholder="4716 8039 02" />
+                <TextInputCustom
+                  error={isError ? "Número inválido" : ""}
+                  placeholder="4716 8039 02"
+                />
               </Flex>
               <Flex direction="column">
                 <Text color="gray" size="sm" weight={500}>
                   Nome do titular
                 </Text>
-                <TextInputCustom placeholder="Nome como está no cartão" />
+                <TextInputCustom
+                  error={isError ? "Nome inválido" : ""}
+                  placeholder="Nome como está no cartão"
+                />
               </Flex>
               <Flex align="center" gap="md">
                 <Flex direction="column" maw={182}>
                   <Text color="gray" size="sm" weight={500}>
                     Validade
                   </Text>
-                  <TextInputCustom placeholder="mm/aa" />
+                  <TextInputCustom
+                    error={isError ? "Validade inválida" : ""}
+                    placeholder="mm/aa"
+                  />
                 </Flex>
                 <Flex direction="column" maw={130}>
                   <Flex gap="xs">
@@ -67,7 +79,10 @@ export default function App() {
                       <IconQuestionMark color="black" />
                     </ActionIcon>
                   </Flex>
-                  <TextInputCustom placeholder="***" />
+                  <TextInputCustom
+                    error={isError ? "Código errado" : ""}
+                    placeholder="***"
+                  />
                 </Flex>
               </Flex>
             </Flex>
@@ -139,7 +154,27 @@ export default function App() {
             fullWidth
             p={16}
             mt={48}
-            styles={{ root: { height: "auto" } }}
+            styles={(theme) => ({
+              root: {
+                boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
+                color: theme.colors.gray[0],
+                height: "auto",
+
+                "&:disabled": {
+                  backgroundColor: theme.colors.purple[0],
+                  color: theme.colors.gray[0],
+                  opacity: 0.5,
+                },
+
+                "&:focus": {
+                  border: `2px solid ${theme.colors.gray[0]}`,
+                },
+
+                "&:hover": {
+                  backgroundColor: theme.colors.purple[1],
+                },
+              },
+            })}
           >
             <Text size="lg">Adicionar cartão</Text>
           </Button>
