@@ -55,11 +55,12 @@ export default function App() {
                   </Text>
                   <TextInputCustom
                     name="cardNumber"
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     placeholder="4716 8039 0211 9321"
                     value={formik.values.cardNumber}
                   />
-                  {formik.errors.cardNumber && (
+                  {formik.touched.cardNumber && formik.errors.cardNumber && (
                     <Text color="red.0" size="sm">
                       {formik.errors.cardNumber}
                     </Text>
@@ -71,11 +72,12 @@ export default function App() {
                   </Text>
                   <TextInputCustom
                     name="name"
+                    onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     placeholder="Nome como está no cartão"
                     value={formik.values.name}
                   />
-                  {formik.errors.name && (
+                  {formik.touched.name && formik.errors.name && (
                     <Text color="red.0" size="sm">
                       {formik.errors.name}
                     </Text>
@@ -88,15 +90,17 @@ export default function App() {
                     </Text>
                     <TextInputCustom
                       name="expirationDate"
+                      onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                       placeholder="mm/aa"
                       value={formik.values.expirationDate}
                     />
-                    {formik.errors.expirationDate && (
-                      <Text color="red.0" size="sm">
-                        {formik.errors.expirationDate}
-                      </Text>
-                    )}
+                    {formik.touched.expirationDate &&
+                      formik.errors.expirationDate && (
+                        <Text color="red.0" size="sm">
+                          {formik.errors.expirationDate}
+                        </Text>
+                      )}
                   </Flex>
                   <Flex direction="column" maw={130}>
                     <Flex gap="xs">
@@ -114,15 +118,17 @@ export default function App() {
                     </Flex>
                     <TextInputCustom
                       name="cardVerificationValue"
+                      onBlur={formik.handleBlur}
                       onChange={formik.handleChange}
                       placeholder="***"
                       value={formik.values.cardVerificationValue}
                     />
-                    {formik.errors.cardVerificationValue && (
-                      <Text color="red.0" size="sm">
-                        {formik.errors.cardVerificationValue}
-                      </Text>
-                    )}
+                    {formik.touched.cardVerificationValue &&
+                      formik.errors.cardVerificationValue && (
+                        <Text color="red.0" size="sm">
+                          {formik.errors.cardVerificationValue}
+                        </Text>
+                      )}
                   </Flex>
                 </Flex>
               </Flex>
