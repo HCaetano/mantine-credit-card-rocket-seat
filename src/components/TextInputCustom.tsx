@@ -2,25 +2,19 @@ import { TextInput } from "@mantine/core";
 
 type TextInputCustomType = {
   name: string;
-  onBlur: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   value: string;
 };
 
 export default function TextInputCustom({
-  name,
-  onBlur,
-  onChange,
   placeholder,
-  value,
+  ...props
 }: TextInputCustomType) {
   return (
     <>
       <TextInput
-        name={name}
-        onBlur={onBlur}
-        onChange={onChange}
         placeholder={placeholder}
         styles={(theme) => ({
           error: {
@@ -52,7 +46,7 @@ export default function TextInputCustom({
             },
           },
         })}
-        value={value}
+        {...props}
       />
     </>
   );

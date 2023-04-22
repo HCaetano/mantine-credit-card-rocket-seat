@@ -54,11 +54,8 @@ export default function App() {
                     Número do cartão
                   </Text>
                   <TextInputCustom
-                    name="cardNumber"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
                     placeholder="4716 8039 0211 9321"
-                    value={formik.values.cardNumber}
+                    {...formik.getFieldProps("cardNumber")}
                   />
                   {formik.touched.cardNumber && formik.errors.cardNumber && (
                     <Text color="red.0" size="sm">
@@ -71,11 +68,8 @@ export default function App() {
                     Nome do titular
                   </Text>
                   <TextInputCustom
-                    name="name"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
                     placeholder="Nome como está no cartão"
-                    value={formik.values.name}
+                    {...formik.getFieldProps("name")}
                   />
                   {formik.touched.name && formik.errors.name && (
                     <Text color="red.0" size="sm">
@@ -89,11 +83,8 @@ export default function App() {
                       Validade
                     </Text>
                     <TextInputCustom
-                      name="expirationDate"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
                       placeholder="mm/aa"
-                      value={formik.values.expirationDate}
+                      {...formik.getFieldProps("expirationDate")}
                     />
                     {formik.touched.expirationDate &&
                       formik.errors.expirationDate && (
@@ -117,11 +108,8 @@ export default function App() {
                       </ActionIcon>
                     </Flex>
                     <TextInputCustom
-                      name="cardVerificationValue"
-                      onBlur={formik.handleBlur}
-                      onChange={formik.handleChange}
                       placeholder="***"
-                      value={formik.values.cardVerificationValue}
+                      {...formik.getFieldProps("cardVerificationValue")}
                     />
                     {formik.touched.cardVerificationValue &&
                       formik.errors.cardVerificationValue && (
