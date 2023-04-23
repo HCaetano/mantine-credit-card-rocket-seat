@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
+import { debounce } from "lodash";
 import {
   ActionIcon,
   Box,
@@ -7,10 +9,12 @@ import {
   Flex,
   Image,
   Text,
+  TextInput,
 } from "@mantine/core";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { ThemeProvider } from "./config/ThemeProvider";
 import { HiddenInformation } from "./styles";
+import BackgroundBlur from "./assets/Background-blur.png";
 import ContactlessPayment from "./assets/Contactless-payment.svg";
 import SafetySymbol from "./assets/Safety-symbol.svg";
 import VisaLogo from "./assets/Visa.svg";
@@ -30,6 +34,11 @@ export default function App() {
       console.log(values);
     },
   });
+  const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
+
+  const handleTyping = debounce(function () {
+    setShouldShowCardBack(false);
+  }, 500);
 
   return (
     <ThemeProvider>
@@ -108,8 +117,17 @@ export default function App() {
                       </ActionIcon>
                     </Flex>
                     <TextInputCustom
+                      name="cardVerificationValue"
+                      onBlur={(event) => {
+                        formik.handleBlur(event);
+                        handleTyping();
+                      }}
+                      onChange={(event) => {
+                        setShouldShowCardBack(true);
+                        formik.handleChange(event);
+                      }}
                       placeholder="***"
-                      {...formik.getFieldProps("cardVerificationValue")}
+                      value={formik.values.cardVerificationValue}
                     />
                     {formik.touched.cardVerificationValue &&
                       formik.errors.cardVerificationValue && (
@@ -123,59 +141,97 @@ export default function App() {
               <Flex direction="column" gap={34}>
                 <Box
                   sx={(theme) => ({
-                    background: theme.colors.gray[9],
+                    backgroundImage: `url(${BackgroundBlur})`,
+                    backgroundRepeat: "no-repeat",
                     border: `1px solid ${theme.colors.gray[7]}`,
                     borderRadius: "16px",
                     boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.25)",
                     height: "fit-content",
-                    padding: "24px",
+                    padding: shouldShowCardBack ? "0" : "11px 24px",
                     width: "280px",
                   })}
                 >
-                  <Flex direction="column">
-                    <Flex align="center" justify="space-between">
+                  {shouldShowCardBack ? (
+                    <Flex direction="column" h={169}>
                       <Box
-                        sx={() => ({
-                          width: "32px",
+                        sx={(theme) => ({
+                          background: theme.colors.gray[9],
+                          height: "32px",
+                          marginTop: "16px",
+                          width: "100%",
                         })}
-                      >
-                        <Image alt="Visa logo" src={VisaLogo} />
-                      </Box>
-                      <Box
-                        sx={() => ({
-                          width: "32px",
-                        })}
-                      >
-                        <Image
-                          alt="Contactless Payment symbol"
-                          src={ContactlessPayment}
+                      />
+                      <Flex align="center" m="46px auto 0">
+                        <TextInput
+                          rightSection={
+                            formik.values.cardVerificationValue.length > 0
+                              ? formik.values.cardVerificationValue
+                              : "***"
+                          }
                         />
-                      </Box>
+                        <Text color="gray.2" ml={8}>
+                          CVV
+                        </Text>
+                      </Flex>
                     </Flex>
-                    <Flex justify="space-between" mt={40}>
-                      <Text color="gray.0" size="md" weight={600}>
-                        4 7 1 6
-                      </Text>
-                      <Text color="gray.0" size="md" weight={600}>
-                        8 0 3 9
-                      </Text>
-                      <Text color="gray.0" size="md" weight={600}>
-                        0 2{" "}
-                        <HiddenInformation>&#x2022; &#x2022;</HiddenInformation>
-                      </Text>
-                      <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-                        &#x2022; &#x2022; &#x2022; &#x2022;
-                      </Text>
+                  ) : (
+                    <Flex direction="column">
+                      <Flex align="center" justify="space-between">
+                        <Box
+                          sx={() => ({
+                            width: "32px",
+                          })}
+                        >
+                          <Image alt="Visa logo" src={VisaLogo} />
+                        </Box>
+                        <Box
+                          sx={() => ({
+                            width: "32px",
+                          })}
+                        >
+                          <Image
+                            alt="Contactless Payment symbol"
+                            src={ContactlessPayment}
+                          />
+                        </Box>
+                      </Flex>
+                      <Flex justify="space-between" mt={40}>
+                        <Text color="gray.0" size="md" weight={600}>
+                          4 7 1 6
+                        </Text>
+                        <Text color="gray.0" size="md" weight={600}>
+                          8 0 3 9
+                        </Text>
+                        <Text color="gray.0" size="md" weight={600}>
+                          0 2{" "}
+                          <HiddenInformation>
+                            &#x2022; &#x2022;
+                          </HiddenInformation>
+                        </Text>
+                        <Text
+                          color="gray.0"
+                          opacity={0.5}
+                          size="md"
+                          weight={600}
+                        >
+                          &#x2022; &#x2022; &#x2022; &#x2022;
+                        </Text>
+                      </Flex>
+                      <Flex justify="space-between" mt={24}>
+                        <Text color="gray.0" opacity={0.5} size="md">
+                          Seu nome aqui
+                        </Text>
+                        <Text
+                          color="gray.0"
+                          opacity={0.5}
+                          size="md"
+                          weight={600}
+                        >
+                          &#x2022; &#x2022; / &#x2022; &#x2022;
+                        </Text>
+                      </Flex>
                     </Flex>
-                    <Flex justify="space-between" mt={24}>
-                      <Text color="gray.0" opacity={0.5} size="md">
-                        Seu nome aqui
-                      </Text>
-                      <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-                        &#x2022; &#x2022; / &#x2022; &#x2022;
-                      </Text>
-                    </Flex>
-                  </Flex>
+                  )}
                 </Box>
                 <Flex align="center" gap={8} m="0 auto">
                   <Image height={15} src={SafetySymbol} width={15} />
