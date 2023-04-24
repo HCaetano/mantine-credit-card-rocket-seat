@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import { debounce } from "lodash";
 import {
@@ -35,6 +35,22 @@ export default function App() {
     },
   });
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
+
+  const handleNameDisplay = (name: string) => {
+    const nameHasNumbersInIt = /\d/.test(name);
+
+    if (!name || nameHasNumbersInIt) {
+      return "Seu nome aqui";
+    }
+
+    console.log(name.length);
+
+    if (name.length > 20) {
+      return name.slice(0, 20);
+    }
+
+    return name;
+  };
 
   const handleTyping = debounce(function () {
     setShouldShowCardBack(false);
@@ -92,8 +108,26 @@ export default function App() {
                       Validade
                     </Text>
                     <TextInputCustom
+                      name="expirationDate"
+                      onBlur={formik.handleBlur}
+                      onChange={(event) => {
+                        const formattedNumber =
+                          Number(event.target.value) < 10
+                            ? `0${event.target.value}`
+                            : event.target.value;
+
+                        if (event.target.value.length === 2) {
+                          formik.setFieldValue(
+                            "expirationDate",
+                            `${formattedNumber}/`
+                          );
+                          return;
+                        }
+
+                        formik.setFieldValue("expirationDate", formattedNumber);
+                      }}
                       placeholder="mm/aa"
-                      {...formik.getFieldProps("expirationDate")}
+                      value={formik.values.expirationDate}
                     />
                     {formik.touched.expirationDate &&
                       formik.errors.expirationDate && (
@@ -219,7 +253,7 @@ export default function App() {
                       </Flex>
                       <Flex justify="space-between" mt={24}>
                         <Text color="gray.0" opacity={0.5} size="md">
-                          Seu nome aqui
+                          {handleNameDisplay(formik.values.name)}
                         </Text>
                         <Text
                           color="gray.0"

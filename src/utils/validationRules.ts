@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { TestFunction, ValidationError } from "yup";
 
 export const validationRules = Yup.object({
   cardNumber: Yup.string()
@@ -9,9 +10,42 @@ export const validationRules = Yup.object({
     .length(3, "Três números")
     .required("Campo obrigatório"),
   expirationDate: Yup.string()
-    .matches(
-      /^(1[0-2]|0[1-9]|[1-9])\/(20\d{2}|0(?!0)\d|[1-9]\d)$/,
-      "Formato mm/aaaa"
+    .test(
+      "checks validity of month input value",
+      "Mês entre 1 e 12",
+      (
+        value: string | undefined
+      ):
+        | boolean
+        | void
+        | ValidationError
+        | Promise<boolean | ValidationError> => {
+        if (!value) return false;
+
+        const [month] = value.split("/");
+        const monthAsNumber = Number(month);
+        const isValidMonth = 1 <= monthAsNumber && monthAsNumber <= 12;
+
+        return isValidMonth;
+      }
+    )
+    .test(
+      "checks validity of year input value",
+      "Ano entre 23 e 29",
+      (
+        value: string | undefined
+      ):
+        | boolean
+        | void
+        | ValidationError
+        | Promise<boolean | ValidationError> => {
+        if (!value) return false;
+        const [, year] = value.split("/");
+        const yearAsNumber = Number(year);
+        const isValidYear = 23 <= yearAsNumber && yearAsNumber <= 29;
+
+        return isValidYear;
+      }
     )
     .required("Campo obrigatório"),
   name: Yup.string()
