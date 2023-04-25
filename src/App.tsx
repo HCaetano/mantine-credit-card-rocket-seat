@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FocusEventHandler, useState } from "react";
 import { useFormik } from "formik";
 import { debounce } from "lodash";
 import {
@@ -11,6 +11,7 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
+import { DatePickerInput } from "@mantine/dates";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { ThemeProvider } from "./config/ThemeProvider";
 import { HiddenInformation } from "./styles";
@@ -26,7 +27,6 @@ export default function App() {
     initialValues: {
       cardNumber: "",
       cardVerificationValue: "",
-      expirationDate: "",
       name: "",
     },
     validationSchema: validationRules,
@@ -35,6 +35,7 @@ export default function App() {
     },
   });
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
+  const [expirationDate, setExpirationDate] = useState<Date | null>(null);
 
   const handleNameDisplay = (name: string) => {
     const nameHasNumbersInIt = /\d/.test(name);
@@ -42,8 +43,6 @@ export default function App() {
     if (!name || nameHasNumbersInIt) {
       return "Seu nome aqui";
     }
-
-    console.log(name.length);
 
     if (name.length > 20) {
       return name.slice(0, 20);
@@ -107,34 +106,37 @@ export default function App() {
                     <Text color="gray" size="sm" weight={500}>
                       Validade
                     </Text>
-                    <TextInputCustom
-                      name="expirationDate"
-                      onBlur={formik.handleBlur}
-                      onChange={(event) => {
-                        const formattedNumber =
-                          Number(event.target.value) < 10
-                            ? `0${event.target.value}`
-                            : event.target.value;
-
-                        if (event.target.value.length === 2) {
-                          formik.setFieldValue(
-                            "expirationDate",
-                            `${formattedNumber}/`
-                          );
-                          return;
-                        }
-
-                        formik.setFieldValue("expirationDate", formattedNumber);
-                      }}
+                    <DatePickerInput
+                      minDate={new Date()}
+                      onChange={setExpirationDate}
                       placeholder="mm/aa"
-                      value={formik.values.expirationDate}
+                      value={expirationDate}
+                      valueFormat="MM/YY"
+                      styles={(theme) => ({
+                        input: {
+                          backgroundColor: theme.colors.gray[9],
+                          color: theme.colors.gray[1],
+                          width: "100%",
+
+                          "&:focus": {
+                            border: `1.5px solid ${theme.colors.purple[0]}`,
+                          },
+
+                          "&:hover": {
+                            border: `1.5px solid ${theme.colors.gray[6]}`,
+                          },
+
+                          "&::placeholder": {
+                            // TODO: placeholder doesn't have the same color as other inputs
+                            color: theme.colors.purple[3],
+                          },
+                        },
+                      })}
                     />
-                    {formik.touched.expirationDate &&
-                      formik.errors.expirationDate && (
-                        <Text color="red.0" size="sm">
-                          {formik.errors.expirationDate}
-                        </Text>
-                      )}
+                    {/* TODO: date input doesn't have error handling
+                       <Text color="red.0" size="sm">
+                        erro
+                      </Text> */}
                   </Flex>
                   <Flex direction="column" maw={130}>
                     <Flex gap="xs">
