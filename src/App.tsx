@@ -1,4 +1,4 @@
-import { FocusEventHandler, useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import { debounce } from "lodash";
 import {
@@ -36,6 +36,16 @@ export default function App() {
   });
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
+
+  const handleCardNumberDisplay = (cardNumber: string) => {
+    const isNumeric = /^-?\d+$/.test(cardNumber);
+
+    if (!cardNumber || !isNumeric) {
+      return null;
+    }
+
+    return cardNumber.split("").join(" ");
+  };
 
   const handleNameDisplay = (name: string) => {
     const nameHasNumbersInIt = /\d/.test(name);
@@ -233,24 +243,53 @@ export default function App() {
                       </Flex>
                       <Flex justify="space-between" mt={40}>
                         <Text color="gray.0" size="md" weight={600}>
-                          4 7 1 6
+                          {formik.values.cardNumber.length > 0 ? (
+                            handleCardNumberDisplay(
+                              formik.values.cardNumber.slice(0, 4)
+                            )
+                          ) : (
+                            <HiddenInformation>
+                              &#x2022; &#x2022; &#x2022; &#x2022;
+                            </HiddenInformation>
+                          )}
                         </Text>
                         <Text color="gray.0" size="md" weight={600}>
-                          8 0 3 9
+                          {formik.values.cardNumber.length > 4 ? (
+                            handleCardNumberDisplay(
+                              formik.values.cardNumber.slice(4, 8)
+                            )
+                          ) : (
+                            <HiddenInformation>
+                              &#x2022; &#x2022; &#x2022; &#x2022;
+                            </HiddenInformation>
+                          )}
                         </Text>
                         <Text color="gray.0" size="md" weight={600}>
-                          0 2{" "}
-                          <HiddenInformation>
-                            &#x2022; &#x2022;
-                          </HiddenInformation>
+                          {formik.values.cardNumber.length > 8 ? (
+                            handleCardNumberDisplay(
+                              formik.values.cardNumber.slice(8, 12)
+                            )
+                          ) : (
+                            <HiddenInformation>
+                              &#x2022; &#x2022; &#x2022; &#x2022;
+                            </HiddenInformation>
+                          )}
                         </Text>
                         <Text
                           color="gray.0"
-                          opacity={0.5}
+                          // TODO: it's possible to avoid using HiddenInformation if we add this prop -> opacity={0.5}
                           size="md"
                           weight={600}
                         >
-                          &#x2022; &#x2022; &#x2022; &#x2022;
+                          {formik.values.cardNumber.length > 12 ? (
+                            handleCardNumberDisplay(
+                              formik.values.cardNumber.slice(12, 16)
+                            )
+                          ) : (
+                            <HiddenInformation>
+                              &#x2022; &#x2022; &#x2022; &#x2022;
+                            </HiddenInformation>
+                          )}
                         </Text>
                       </Flex>
                       <Flex justify="space-between" mt={24}>
