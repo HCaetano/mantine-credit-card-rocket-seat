@@ -47,6 +47,18 @@ export default function App() {
     return cardNumber.split("").join(" ");
   };
 
+  const handleExpirationDateDisplay = (expirationDate: Date | null) => {
+    if (!expirationDate) {
+      return null;
+    }
+
+    const monthAsNumber = expirationDate.getMonth() + 1;
+    const monthAsString =
+      monthAsNumber < 10 ? `0${monthAsNumber}` : monthAsNumber;
+
+    return `${monthAsString}/${expirationDate.getFullYear()}`;
+  };
+
   const handleNameDisplay = (name: string) => {
     const nameHasNumbersInIt = /\d/.test(name);
 
@@ -112,7 +124,7 @@ export default function App() {
                   )}
                 </Flex>
                 <Flex gap="md">
-                  <Flex direction="column" maw={182}>
+                  <Flex direction="column" w={70}>
                     <Text color="gray" size="sm" weight={500}>
                       Validade
                     </Text>
@@ -302,7 +314,13 @@ export default function App() {
                           size="md"
                           weight={600}
                         >
-                          &#x2022; &#x2022; / &#x2022; &#x2022;
+                          {handleExpirationDateDisplay(expirationDate) ? (
+                            handleExpirationDateDisplay(expirationDate)
+                          ) : (
+                            <HiddenInformation>
+                              &#x2022; &#x2022;/&#x2022; &#x2022;
+                            </HiddenInformation>
+                          )}
                         </Text>
                       </Flex>
                     </Flex>
