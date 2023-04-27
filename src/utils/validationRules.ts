@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const requiredFieldText = "Campo obrigatário";
+const requiredFieldText = "Campo obrigatório";
 
 export const validationRules = Yup.object({
   cardNumber: Yup.string()
