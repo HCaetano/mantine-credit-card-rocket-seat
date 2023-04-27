@@ -4,8 +4,8 @@ const requiredFieldText = "Campo obrigatário";
 
 export const validationRules = Yup.object({
   cardNumber: Yup.string()
-    .matches(/[0-9]/, "Digite somente números")
-    .length(12, "Número deve ter 12 dígitos")
+    .matches(/^-?\d*\.?\d*$/, "Digite somente números")
+    .length(16, "Número deve ter 16 dígitos")
     .required(requiredFieldText),
   cardVerificationValue: Yup.string()
     .length(3, "Três números")
