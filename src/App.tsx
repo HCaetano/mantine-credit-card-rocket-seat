@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useFormik } from "formik";
 import { debounce } from "lodash";
+import ReactCardFlip from "react-card-flip";
 import {
   ActionIcon,
   Box,
@@ -209,30 +210,10 @@ export default function App() {
                     width: "280px",
                   })}
                 >
-                  {shouldShowCardBack ? (
-                    <Flex direction="column" h={169}>
-                      <Box
-                        sx={(theme) => ({
-                          background: theme.colors.gray[9],
-                          height: "32px",
-                          marginTop: "16px",
-                          width: "100%",
-                        })}
-                      />
-                      <Flex align="center" m="46px auto 0">
-                        <TextInput
-                          rightSection={
-                            formik.values.cardVerificationValue.length > 0
-                              ? formik.values.cardVerificationValue
-                              : "***"
-                          }
-                        />
-                        <Text color="gray.2" ml={8}>
-                          CVV
-                        </Text>
-                      </Flex>
-                    </Flex>
-                  ) : (
+                  <ReactCardFlip
+                    isFlipped={shouldShowCardBack}
+                    flipDirection="horizontal"
+                  >
                     <Flex direction="column">
                       <Flex align="center" justify="space-between">
                         <Box
@@ -324,7 +305,32 @@ export default function App() {
                         </Text>
                       </Flex>
                     </Flex>
-                  )}
+                    <Flex direction="column" h={169}>
+                      <Box
+                        sx={(theme) => ({
+                          background: theme.colors.gray[9],
+                          height: "32px",
+                          marginTop: "16px",
+                          width: "100%",
+                        })}
+                      />
+                      <Flex align="center" m="46px auto 0">
+                        <TextInput
+                          rightSection={
+                            formik.values.cardVerificationValue.length > 0
+                              ? formik.values.cardVerificationValue.substring(
+                                  0,
+                                  3
+                                )
+                              : "***"
+                          }
+                        />
+                        <Text color="gray.2" ml={8}>
+                          CVV
+                        </Text>
+                      </Flex>
+                    </Flex>
+                  </ReactCardFlip>
                 </Box>
                 <Flex align="center" gap={8} m="0 auto">
                   <Image height={15} src={SafetySymbol} width={15} />
