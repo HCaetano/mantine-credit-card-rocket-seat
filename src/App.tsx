@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useFormik } from "formik";
 import { debounce } from "lodash";
+import ReactCardFlip from "react-card-flip";
 import {
   ActionIcon,
   Box,
@@ -11,6 +12,7 @@ import {
   Text,
   TextInput,
 } from "@mantine/core";
+import { DatePickerInput } from "@mantine/dates";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { ThemeProvider } from "./config/ThemeProvider";
 import { HiddenInformation } from "./styles";
@@ -26,7 +28,6 @@ export default function App() {
     initialValues: {
       cardNumber: "",
       cardVerificationValue: "",
-      expirationDate: "",
       name: "",
     },
     validationSchema: validationRules,
@@ -35,6 +36,29 @@ export default function App() {
     },
   });
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
+  const [expirationDate, setExpirationDate] = useState<Date | null>(null);
+
+  const handleCardNumberDisplay = (cardNumber: string) => {
+    const isNumeric = /^-?\d+$/.test(cardNumber);
+
+    if (!cardNumber || !isNumeric) {
+      return null;
+    }
+
+    return cardNumber.split("").join(" ");
+  };
+
+  const handleExpirationDateDisplay = (expirationDate: Date | null) => {
+    if (!expirationDate) {
+      return null;
+    }
+
+    const monthAsNumber = expirationDate.getMonth() + 1;
+    const monthAsString =
+      monthAsNumber < 10 ? `0${monthAsNumber}` : monthAsNumber;
+
+    return `${monthAsString}/${expirationDate.getFullYear()}`;
+  };
 
   const handleNameDisplay = (name: string) => {
     const nameHasNumbersInIt = /\d/.test(name);
@@ -42,8 +66,6 @@ export default function App() {
     if (!name || nameHasNumbersInIt) {
       return "Seu nome aqui";
     }
-
-    console.log(name.length);
 
     if (name.length > 20) {
       return name.slice(0, 20);
@@ -103,38 +125,41 @@ export default function App() {
                   )}
                 </Flex>
                 <Flex gap="md">
-                  <Flex direction="column" maw={182}>
+                  <Flex direction="column" w={70}>
                     <Text color="gray" size="sm" weight={500}>
                       Validade
                     </Text>
-                    <TextInputCustom
-                      name="expirationDate"
-                      onBlur={formik.handleBlur}
-                      onChange={(event) => {
-                        const formattedNumber =
-                          Number(event.target.value) < 10
-                            ? `0${event.target.value}`
-                            : event.target.value;
-
-                        if (event.target.value.length === 2) {
-                          formik.setFieldValue(
-                            "expirationDate",
-                            `${formattedNumber}/`
-                          );
-                          return;
-                        }
-
-                        formik.setFieldValue("expirationDate", formattedNumber);
-                      }}
+                    <DatePickerInput
+                      minDate={new Date()}
+                      onChange={setExpirationDate}
                       placeholder="mm/aa"
-                      value={formik.values.expirationDate}
+                      value={expirationDate}
+                      valueFormat="MM/YY"
+                      styles={(theme) => ({
+                        input: {
+                          backgroundColor: theme.colors.gray[9],
+                          color: theme.colors.gray[1],
+                          width: "100%",
+
+                          "&:focus": {
+                            border: `1.5px solid ${theme.colors.purple[0]}`,
+                          },
+
+                          "&:hover": {
+                            border: `1.5px solid ${theme.colors.gray[6]}`,
+                          },
+
+                          "&::placeholder": {
+                            // TODO: placeholder doesn't have the same color as other inputs
+                            color: theme.colors.purple[3],
+                          },
+                        },
+                      })}
                     />
-                    {formik.touched.expirationDate &&
-                      formik.errors.expirationDate && (
-                        <Text color="red.0" size="sm">
-                          {formik.errors.expirationDate}
-                        </Text>
-                      )}
+                    {/* TODO: date input doesn't have error handling
+                       <Text color="red.0" size="sm">
+                        erro
+                      </Text> */}
                   </Flex>
                   <Flex direction="column" maw={130}>
                     <Flex gap="xs">
@@ -185,30 +210,10 @@ export default function App() {
                     width: "280px",
                   })}
                 >
-                  {shouldShowCardBack ? (
-                    <Flex direction="column" h={169}>
-                      <Box
-                        sx={(theme) => ({
-                          background: theme.colors.gray[9],
-                          height: "32px",
-                          marginTop: "16px",
-                          width: "100%",
-                        })}
-                      />
-                      <Flex align="center" m="46px auto 0">
-                        <TextInput
-                          rightSection={
-                            formik.values.cardVerificationValue.length > 0
-                              ? formik.values.cardVerificationValue
-                              : "***"
-                          }
-                        />
-                        <Text color="gray.2" ml={8}>
-                          CVV
-                        </Text>
-                      </Flex>
-                    </Flex>
-                  ) : (
+                  <ReactCardFlip
+                    isFlipped={shouldShowCardBack}
+                    flipDirection="horizontal"
+                  >
                     <Flex direction="column">
                       <Flex align="center" justify="space-between">
                         <Box
@@ -231,24 +236,53 @@ export default function App() {
                       </Flex>
                       <Flex justify="space-between" mt={40}>
                         <Text color="gray.0" size="md" weight={600}>
-                          4 7 1 6
+                          {formik.values.cardNumber.length > 0 ? (
+                            handleCardNumberDisplay(
+                              formik.values.cardNumber.slice(0, 4)
+                            )
+                          ) : (
+                            <HiddenInformation>
+                              &#x2022; &#x2022; &#x2022; &#x2022;
+                            </HiddenInformation>
+                          )}
                         </Text>
                         <Text color="gray.0" size="md" weight={600}>
-                          8 0 3 9
+                          {formik.values.cardNumber.length > 4 ? (
+                            handleCardNumberDisplay(
+                              formik.values.cardNumber.slice(4, 8)
+                            )
+                          ) : (
+                            <HiddenInformation>
+                              &#x2022; &#x2022; &#x2022; &#x2022;
+                            </HiddenInformation>
+                          )}
                         </Text>
                         <Text color="gray.0" size="md" weight={600}>
-                          0 2{" "}
-                          <HiddenInformation>
-                            &#x2022; &#x2022;
-                          </HiddenInformation>
+                          {formik.values.cardNumber.length > 8 ? (
+                            handleCardNumberDisplay(
+                              formik.values.cardNumber.slice(8, 12)
+                            )
+                          ) : (
+                            <HiddenInformation>
+                              &#x2022; &#x2022; &#x2022; &#x2022;
+                            </HiddenInformation>
+                          )}
                         </Text>
                         <Text
                           color="gray.0"
-                          opacity={0.5}
+                          // TODO: it's possible to avoid using HiddenInformation if we add this prop -> opacity={0.5}
                           size="md"
                           weight={600}
                         >
-                          &#x2022; &#x2022; &#x2022; &#x2022;
+                          {formik.values.cardNumber.length > 12 ? (
+                            handleCardNumberDisplay(
+                              formik.values.cardNumber.slice(12, 16)
+                            )
+                          ) : (
+                            <HiddenInformation>
+                              &#x2022; &#x2022; &#x2022; &#x2022;
+                            </HiddenInformation>
+                          )}
                         </Text>
                       </Flex>
                       <Flex justify="space-between" mt={24}>
@@ -261,11 +295,42 @@ export default function App() {
                           size="md"
                           weight={600}
                         >
-                          &#x2022; &#x2022; / &#x2022; &#x2022;
+                          {handleExpirationDateDisplay(expirationDate) ? (
+                            handleExpirationDateDisplay(expirationDate)
+                          ) : (
+                            <HiddenInformation>
+                              &#x2022; &#x2022;/&#x2022; &#x2022;
+                            </HiddenInformation>
+                          )}
                         </Text>
                       </Flex>
                     </Flex>
-                  )}
+                    <Flex direction="column" h={169}>
+                      <Box
+                        sx={(theme) => ({
+                          background: theme.colors.gray[9],
+                          height: "32px",
+                          marginTop: "16px",
+                          width: "100%",
+                        })}
+                      />
+                      <Flex align="center" m="46px auto 0">
+                        <TextInput
+                          rightSection={
+                            formik.values.cardVerificationValue.length > 0
+                              ? formik.values.cardVerificationValue.substring(
+                                  0,
+                                  3
+                                )
+                              : "***"
+                          }
+                        />
+                        <Text color="gray.2" ml={8}>
+                          CVV
+                        </Text>
+                      </Flex>
+                    </Flex>
+                  </ReactCardFlip>
                 </Box>
                 <Flex align="center" gap={8} m="0 auto">
                   <Image height={15} src={SafetySymbol} width={15} />
