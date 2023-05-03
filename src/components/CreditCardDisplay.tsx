@@ -8,22 +8,48 @@ type CreditCardDisplayType = {
   cardData: {
     expirationDate: Date | null;
     formik: any;
-    handleCardNumberDisplay: (cardNumber: string) => string | null;
-    handleExpirationDateDisplay: (expirationDate: Date | null) => string | null;
-    handleNameDisplay: (name: string) => string;
     shouldShowCardBack: boolean;
   };
 };
 
+const handleCardNumberDisplay = (cardNumber: string) => {
+  const isNumeric = /^-?\d+$/.test(cardNumber);
+
+  if (!cardNumber || !isNumeric) {
+    return null;
+  }
+
+  return cardNumber.split("").join(" ");
+};
+
+const handleExpirationDateDisplay = (expirationDate: Date | null) => {
+  if (!expirationDate) {
+    return null;
+  }
+
+  const monthAsNumber = expirationDate.getMonth() + 1;
+  const monthAsString =
+    monthAsNumber < 10 ? `0${monthAsNumber}` : monthAsNumber;
+
+  return `${monthAsString}/${expirationDate.getFullYear()}`;
+};
+
+const handleNameDisplay = (name: string) => {
+  const nameHasNumbersInIt = /\d/.test(name);
+
+  if (!name || nameHasNumbersInIt) {
+    return "Seu nome aqui";
+  }
+
+  if (name.length > 20) {
+    return name.slice(0, 20);
+  }
+
+  return name;
+};
+
 function CreditCardDisplay(props: CreditCardDisplayType) {
-  const {
-    expirationDate,
-    formik,
-    handleCardNumberDisplay,
-    handleExpirationDateDisplay,
-    handleNameDisplay,
-    shouldShowCardBack,
-  } = props.cardData;
+  const { expirationDate, formik, shouldShowCardBack } = props.cardData;
 
   return (
     <ReactCardFlip isFlipped={shouldShowCardBack} flipDirection="horizontal">

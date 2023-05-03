@@ -34,42 +34,6 @@ export default function App() {
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
 
-  const handleCardNumberDisplay = (cardNumber: string) => {
-    const isNumeric = /^-?\d+$/.test(cardNumber);
-
-    if (!cardNumber || !isNumeric) {
-      return null;
-    }
-
-    return cardNumber.split("").join(" ");
-  };
-
-  const handleExpirationDateDisplay = (expirationDate: Date | null) => {
-    if (!expirationDate) {
-      return null;
-    }
-
-    const monthAsNumber = expirationDate.getMonth() + 1;
-    const monthAsString =
-      monthAsNumber < 10 ? `0${monthAsNumber}` : monthAsNumber;
-
-    return `${monthAsString}/${expirationDate.getFullYear()}`;
-  };
-
-  const handleNameDisplay = (name: string) => {
-    const nameHasNumbersInIt = /\d/.test(name);
-
-    if (!name || nameHasNumbersInIt) {
-      return "Seu nome aqui";
-    }
-
-    if (name.length > 20) {
-      return name.slice(0, 20);
-    }
-
-    return name;
-  };
-
   const handleTyping = debounce(function () {
     setShouldShowCardBack(false);
   }, 500);
@@ -210,9 +174,6 @@ export default function App() {
                     cardData={{
                       expirationDate,
                       formik,
-                      handleCardNumberDisplay,
-                      handleExpirationDateDisplay,
-                      handleNameDisplay,
                       shouldShowCardBack,
                     }}
                   />
