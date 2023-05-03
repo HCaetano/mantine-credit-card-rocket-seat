@@ -1,4 +1,4 @@
-import { styled } from "./config/stitches.config";
+import { styled } from "../config/stitches.config";
 
 export const HiddenInformation = styled("span", {
   color: "#F9FAFB",
