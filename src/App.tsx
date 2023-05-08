@@ -6,8 +6,7 @@ import { ThemeProvider } from "./config/ThemeProvider";
 import BackgroundBlur from "./assets/Background-blur.png";
 import SafetySymbol from "./assets/Safety-symbol.svg";
 import { validationRules } from "./utils/validationRules";
-import CreditCardDisplay from "./components/CreditCardDisplay";
-import CreditCardForm from "./components/CreditCardForm";
+import { CreditCardDisplay, CreditCardForm } from "./components";
 
 export default function App() {
   const formik = useFormik({
