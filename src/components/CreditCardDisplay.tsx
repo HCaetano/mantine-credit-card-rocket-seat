@@ -5,7 +5,7 @@ import VisaLogo from "../assets/Visa.svg";
 import { HiddenInformation } from "./styles";
 
 type CreditCardDisplayType = {
-  cardData: {
+  cardProps: {
     expirationDate: Date | null;
     formik: any;
     shouldShowCardBack: boolean;
@@ -49,7 +49,7 @@ const handleNameDisplay = (name: string) => {
 };
 
 function CreditCardDisplay(props: CreditCardDisplayType) {
-  const { expirationDate, formik, shouldShowCardBack } = props.cardData;
+  const { expirationDate, formik, shouldShowCardBack } = props.cardProps;
 
   return (
     <ReactCardFlip isFlipped={shouldShowCardBack} flipDirection="horizontal">
