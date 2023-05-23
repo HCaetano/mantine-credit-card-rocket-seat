@@ -44,7 +44,7 @@ function CreditCardForm(props: CreditCardFormType) {
             height: "22px",
           }}
         >
-          {formik.errors.cardNumber}
+          {formik.touched.cardNumber && formik.errors.cardNumber}
         </Text>
       </Flex>
       <Flex direction="column">
@@ -56,7 +56,7 @@ function CreditCardForm(props: CreditCardFormType) {
           {...formik.getFieldProps("name")}
         />
         <Text color="red.0" size="sm" style={{ height: "22px" }}>
-          {formik.errors.name}
+          {formik.touched.name && formik.errors.name}
         </Text>
       </Flex>
       <Flex gap="md">
@@ -93,7 +93,7 @@ function CreditCardForm(props: CreditCardFormType) {
             })}
           />
           <Text color="red.0" size="sm" style={{ height: "22px" }}>
-            {datePickerTouched && !expirationDate ? "Obrigatório" : ""}
+            {datePickerTouched && !expirationDate && "Obrigatório"}
           </Text>
         </Flex>
         <Flex direction="column" maw={130}>
@@ -125,7 +125,8 @@ function CreditCardForm(props: CreditCardFormType) {
               height: "22px",
             }}
           >
-            {formik.errors.cardVerificationValue}
+            {formik.touched.cardVerificationValue &&
+              formik.errors.cardVerificationValue}
           </Text>
         </Flex>
       </Flex>
