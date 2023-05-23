@@ -22,6 +22,11 @@ export default function App() {
   });
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
+  const [datePickerTouched, setDatePickerTouched] = useState(false);
+
+  const handleTouching = () => {
+    setDatePickerTouched(true);
+  };
 
   const handleTyping = debounce(function () {
     setShouldShowCardBack(false);
@@ -46,8 +51,10 @@ export default function App() {
             <Flex gap={64}>
               <CreditCardForm
                 formProps={{
+                  datePickerTouched,
                   expirationDate,
                   formik,
+                  handleTouching,
                   handleTyping,
                   setExpirationDate,
                   setShouldShowCardBack,
@@ -83,8 +90,9 @@ export default function App() {
             <Button
               color="purple.0"
               fullWidth
-              p={16}
               mt={48}
+              onClick={() => handleTouching()}
+              p={16}
               styles={(theme) => ({
                 root: {
                   boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
