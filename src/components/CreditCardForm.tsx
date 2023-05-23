@@ -1,13 +1,15 @@
+import { Dispatch, SetStateAction } from "react";
 import { ActionIcon, Flex, Text } from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
 import { IconQuestionMark } from "@tabler/icons-react";
 import TextInputCustom from "./TextInputCustom";
-import { Dispatch, SetStateAction } from "react";
 
 type CreditCardFormType = {
   formProps: {
+    datePickerTouched: boolean;
     expirationDate: Date | null;
     formik: any;
+    handleTouching: () => void;
     handleTyping: () => void;
     setExpirationDate: Dispatch<SetStateAction<Date | null>>;
     setShouldShowCardBack: Dispatch<SetStateAction<boolean>>;
@@ -16,7 +18,9 @@ type CreditCardFormType = {
 
 function CreditCardForm(props: CreditCardFormType) {
   const {
+    datePickerTouched,
     expirationDate,
+    handleTouching,
     handleTyping,
     formik,
     setExpirationDate,
@@ -24,7 +28,7 @@ function CreditCardForm(props: CreditCardFormType) {
   } = props.formProps;
 
   return (
-    <Flex direction="column" gap="xl" maw={328}>
+    <Flex direction="column" gap="sm" maw={328}>
       <Flex direction="column">
         <Text color="gray" size="sm" weight={500}>
           Número do cartão
@@ -33,11 +37,17 @@ function CreditCardForm(props: CreditCardFormType) {
           placeholder="4716 8039 0211 9321"
           {...formik.getFieldProps("cardNumber")}
         />
-        {formik.touched.cardNumber && formik.errors.cardNumber && (
-          <Text color="red.0" size="sm">
-            {formik.errors.cardNumber}
-          </Text>
-        )}
+        {/* {formik.touched.cardNumber && formik.errors.cardNumber && ( */}
+        <Text
+          color="red.0"
+          size="sm"
+          style={{
+            height: "22px",
+          }}
+        >
+          {formik.errors.cardNumber}
+        </Text>
+        {/* )} */}
       </Flex>
       <Flex direction="column">
         <Text color="gray" size="sm" weight={500}>
@@ -47,11 +57,11 @@ function CreditCardForm(props: CreditCardFormType) {
           placeholder="Nome como está no cartão"
           {...formik.getFieldProps("name")}
         />
-        {formik.touched.name && formik.errors.name && (
-          <Text color="red.0" size="sm">
-            {formik.errors.name}
-          </Text>
-        )}
+        {/* {formik.touched.name && formik.errors.name && ( */}
+        <Text color="red.0" size="sm" style={{ height: "22px" }}>
+          {formik.errors.name}
+        </Text>
+        {/* )} */}
       </Flex>
       <Flex gap="md">
         <Flex direction="column" w={70}>
@@ -60,6 +70,7 @@ function CreditCardForm(props: CreditCardFormType) {
           </Text>
           <DatePickerInput
             minDate={new Date()}
+            onBlur={handleTouching}
             onChange={setExpirationDate}
             placeholder="mm/aa"
             value={expirationDate}
@@ -85,10 +96,9 @@ function CreditCardForm(props: CreditCardFormType) {
               },
             })}
           />
-          {/* TODO: date input doesn't have error handling
-                 <Text color="red.0" size="sm">
-                  erro
-                </Text> */}
+          <Text color="red.0" size="sm" style={{ height: "22px" }}>
+            {datePickerTouched && !expirationDate ? "Obrigatório" : ""}
+          </Text>
         </Flex>
         <Flex direction="column" maw={130}>
           <Flex gap="xs">
@@ -112,12 +122,18 @@ function CreditCardForm(props: CreditCardFormType) {
             placeholder="***"
             value={formik.values.cardVerificationValue}
           />
-          {formik.touched.cardVerificationValue &&
-            formik.errors.cardVerificationValue && (
-              <Text color="red.0" size="sm">
-                {formik.errors.cardVerificationValue}
-              </Text>
-            )}
+          {/* {formik.touched.cardVerificationValue &&
+            formik.errors.cardVerificationValue && ( */}
+          <Text
+            color="red.0"
+            size="sm"
+            style={{
+              height: "22px",
+            }}
+          >
+            {formik.errors.cardVerificationValue}
+          </Text>
+          {/* )} */}
         </Flex>
       </Flex>
     </Flex>
