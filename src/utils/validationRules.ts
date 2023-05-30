@@ -10,7 +10,6 @@ export const validationRules = Yup.object({
   cardVerificationValue: Yup.string()
     .length(3, "Três números")
     .required(requiredFieldText),
-  // TODO: expirationDate doesn't have a validation rule
   name: Yup.string()
     .matches(/^([a-zA-Zà-úÀ-Ú]|-|\s)+$/, "Digite somente letras")
     .min(10, "Nome deve ter 10 dígitos ou mais")
