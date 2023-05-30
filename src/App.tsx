@@ -3,12 +3,13 @@ import { useFormik } from "formik";
 import { debounce } from "lodash";
 import { Anchor, Box, Button, Center, Flex, Image, Text } from "@mantine/core";
 import { addDoc, collection, DocumentData, getDocs } from "firebase/firestore";
-import { ThemeProvider } from "./config/ThemeProvider";
-import BackgroundBlur from "./assets/Background-blur.png";
-import SafetySymbol from "./assets/Safety-symbol.svg";
-import { validationRules } from "./utils/validationRules";
 import { CreditCardDisplay, CreditCardForm } from "./components";
 import { db } from "./config/firebase";
+import { ThemeProvider } from "./config/ThemeProvider";
+import { validationRules } from "./utils/validationRules";
+import { handleExpirationDateDisplay } from "./utils/handleExpirationDateDisplay";
+import BackgroundBlur from "./assets/Background-blur.png";
+import SafetySymbol from "./assets/Safety-symbol.svg";
 
 export default function App() {
   const creditCardsCollection = collection(db, "credit-cards");
@@ -20,12 +21,11 @@ export default function App() {
     },
     validationSchema: validationRules,
     onSubmit: async (values) => {
-      console.log(values);
       setShowCards(true);
       await addDoc(creditCardsCollection, {
         cardNumber: values.cardNumber,
         cardVerificationValue: values.cardVerificationValue,
-        expirationDate, //this sends the full date object
+        expirationDate: handleExpirationDateDisplay(expirationDate),
         name: values.name,
       });
     },

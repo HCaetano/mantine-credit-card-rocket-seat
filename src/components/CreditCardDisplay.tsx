@@ -1,5 +1,6 @@
 import ReactCardFlip from "react-card-flip";
 import { Box, Flex, Image, Text, TextInput } from "@mantine/core";
+import { handleExpirationDateDisplay } from "../utils/handleExpirationDateDisplay";
 import ContactlessPayment from "../assets/Contactless-payment.svg";
 import VisaLogo from "../assets/Visa.svg";
 import { HiddenInformation } from "./styles";
@@ -20,18 +21,6 @@ const handleCardNumberDisplay = (cardNumber: string) => {
   }
 
   return cardNumber.split("").join(" ");
-};
-
-const handleExpirationDateDisplay = (expirationDate: Date | null) => {
-  if (!expirationDate) {
-    return null;
-  }
-
-  const monthAsNumber = expirationDate.getMonth() + 1;
-  const monthAsString =
-    monthAsNumber < 10 ? `0${monthAsNumber}` : monthAsNumber;
-
-  return `${monthAsString}/${expirationDate.getFullYear()}`;
 };
 
 const handleNameDisplay = (name: string) => {
@@ -57,14 +46,14 @@ function CreditCardDisplay(props: CreditCardDisplayType) {
         <Flex align="center" justify="space-between">
           <Box
             sx={() => ({
-              width: "32px",
+              width: 32,
             })}
           >
             <Image alt="Visa logo" src={VisaLogo} />
           </Box>
           <Box
             sx={() => ({
-              width: "32px",
+              width: 32,
             })}
           >
             <Image alt="Contactless Payment symbol" src={ContactlessPayment} />
@@ -132,8 +121,8 @@ function CreditCardDisplay(props: CreditCardDisplayType) {
         <Box
           sx={(theme) => ({
             background: theme.colors.gray[9],
-            height: "32px",
-            marginTop: "16px",
+            height: 32,
+            marginTop: 16,
             width: "100%",
           })}
         />
