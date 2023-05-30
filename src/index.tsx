@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import Routes from "./routes/Routes";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <StrictMode>
-    <App />
+    <Routes />
   </StrictMode>
 );
 
