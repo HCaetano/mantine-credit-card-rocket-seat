@@ -1,8 +1,8 @@
 import ReactCardFlip from "react-card-flip";
 import { Box, Flex, Image, Text, TextInput } from "@mantine/core";
-import { handleExpirationDateDisplay } from "../utils/handleExpirationDateDisplay";
-import ContactlessPayment from "../assets/Contactless-payment.svg";
-import VisaLogo from "../assets/Visa.svg";
+import { handleExpirationDateDisplay } from "../../utils/handleExpirationDateDisplay";
+import ContactlessPayment from "../../assets/Contactless-payment.svg";
+import VisaLogo from "../../assets/Visa.svg";
 import { HiddenInformation } from "./styles";
 
 type CreditCardDisplayType = {
