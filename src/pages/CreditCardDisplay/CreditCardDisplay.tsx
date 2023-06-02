@@ -3,7 +3,6 @@ import { Box, Flex, Image, Text, TextInput } from "@mantine/core";
 import { handleExpirationDateDisplay } from "../../utils/handleExpirationDateDisplay";
 import ContactlessPayment from "../../assets/Contactless-payment.svg";
 import VisaLogo from "../../assets/Visa.svg";
-import { HiddenInformation } from "./styles";
 
 type CreditCardDisplayType = {
   cardProps: {
@@ -60,45 +59,32 @@ function CreditCardDisplay(props: CreditCardDisplayType) {
           </Box>
         </Flex>
         <Flex justify="space-between" mt={40}>
-          <Text color="gray.0" size="md" weight={600}>
+          <Text color="gray.0" opacity={0.5} size="md" weight={600}>
             {formik.values.cardNumber.length > 0 ? (
               handleCardNumberDisplay(formik.values.cardNumber.slice(0, 4))
             ) : (
-              <HiddenInformation>
-                &#x2022; &#x2022; &#x2022; &#x2022;
-              </HiddenInformation>
+              <>&#x2022; &#x2022; &#x2022; &#x2022;</>
             )}
           </Text>
-          <Text color="gray.0" size="md" weight={600}>
+          <Text color="gray.0" opacity={0.5} size="md" weight={600}>
             {formik.values.cardNumber.length > 4 ? (
               handleCardNumberDisplay(formik.values.cardNumber.slice(4, 8))
             ) : (
-              <HiddenInformation>
-                &#x2022; &#x2022; &#x2022; &#x2022;
-              </HiddenInformation>
+              <>&#x2022; &#x2022; &#x2022; &#x2022;</>
             )}
           </Text>
-          <Text color="gray.0" size="md" weight={600}>
+          <Text color="gray.0" opacity={0.5} size="md" weight={600}>
             {formik.values.cardNumber.length > 8 ? (
               handleCardNumberDisplay(formik.values.cardNumber.slice(8, 12))
             ) : (
-              <HiddenInformation>
-                &#x2022; &#x2022; &#x2022; &#x2022;
-              </HiddenInformation>
+              <>&#x2022; &#x2022; &#x2022; &#x2022;</>
             )}
           </Text>
-          <Text
-            color="gray.0"
-            // TODO: it's possible to avoid using HiddenInformation if we add this prop -> opacity={0.5}
-            size="md"
-            weight={600}
-          >
+          <Text color="gray.0" opacity={0.5} size="md" weight={600}>
             {formik.values.cardNumber.length > 12 ? (
               handleCardNumberDisplay(formik.values.cardNumber.slice(12, 16))
             ) : (
-              <HiddenInformation>
-                &#x2022; &#x2022; &#x2022; &#x2022;
-              </HiddenInformation>
+              <>&#x2022; &#x2022; &#x2022; &#x2022;</>
             )}
           </Text>
         </Flex>
@@ -110,9 +96,7 @@ function CreditCardDisplay(props: CreditCardDisplayType) {
             {handleExpirationDateDisplay(expirationDate) ? (
               handleExpirationDateDisplay(expirationDate)
             ) : (
-              <HiddenInformation>
-                &#x2022; &#x2022;/&#x2022; &#x2022;
-              </HiddenInformation>
+              <>&#x2022; &#x2022;/&#x2022; &#x2022;</>
             )}
           </Text>
         </Flex>
