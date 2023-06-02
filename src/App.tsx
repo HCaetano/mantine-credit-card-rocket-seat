@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { debounce } from "lodash";
 import { Anchor, Box, Button, Center, Flex, Image, Text } from "@mantine/core";
 import { addDoc, collection, DocumentData, getDocs } from "firebase/firestore";
-import { CreditCardDisplay, CreditCardForm } from "./components";
+import { CreditCardDisplay, CreditCardForm } from "./pages";
 import { db } from "./config/firebase";
 import { ThemeProvider } from "./config/ThemeProvider";
 import { validationRules } from "./utils/validationRules";
@@ -21,7 +21,6 @@ export default function App() {
     },
     validationSchema: validationRules,
     onSubmit: async (values) => {
-      setShowCards(true);
       await addDoc(creditCardsCollection, {
         cardNumber: values.cardNumber,
         cardVerificationValue: values.cardVerificationValue,
@@ -33,7 +32,6 @@ export default function App() {
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
   const [datePickerTouched, setDatePickerTouched] = useState(false);
-  const [showCards, setShowCards] = useState(false);
   const [creditCards, setCreditCards] = useState<DocumentData[]>([]);
 
   const handleTouching = () => {
@@ -44,14 +42,15 @@ export default function App() {
     setShouldShowCardBack(false);
   }, 500);
 
+  const getCards = async () => {
+    const cards = await getDocs(creditCardsCollection);
+    const cardsList = cards.docs.map((doc) => doc.data());
+    setCreditCards(cardsList);
+  };
+
   useEffect(() => {
-    const getCards = async () => {
-      const cards = await getDocs(creditCardsCollection);
-      const cardsList = cards.docs.map((doc) => doc.data());
-      setCreditCards(cardsList);
-    };
     getCards();
-  }, [creditCardsCollection]);
+  }, []);
 
   return (
     <ThemeProvider>
@@ -149,7 +148,7 @@ export default function App() {
             height: 40,
           })}
         >
-          {showCards && (
+          {creditCards.length > 0 && (
             <Anchor color="purple.2" href="/cards" type="button">
               Confira seus cartões
             </Anchor>
