@@ -1,46 +1,9 @@
-# Mantine create-react-app template
+# Credit Card Handler
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and [Mantine](https//mantine.dev).
+You can check it [here](https://credit-card-register.web.app/). This README is under construction.
 
-## Available Scripts
+## About
 
-In the project directory, you can run:
+This project's goals are for me to practice my coding skills building an UI following a clearly defined [design](https://www.figma.com/file/qdmq94aqNZ6AQEwXpWdqg0/Formul%C3%A1rio-de-Cart%C3%A3o-%E2%80%A2-Desafio-13-(Community)?type=design&node-id=101-680&t=BmtI0Bn7hVB3NriL-0), to get to learn about [Mantine](https://mantine.dev/), [Formik](https://formik.org/) and [Firebase](https://firebase.google.com/?hl=pt-br). 
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+It started as me creating a UI to learn about Mantine, but very quickly I decided I wanted to host this project to make it easily available, so I got into Firebase (I'm loving it!) and I also quickly noticed I wanted to beyond the design, so I added validation to all the fields and now I'm working on persisting the cards and creating a page to fetch the cards ssaved on Firebase to display as a gallery of sorts.
