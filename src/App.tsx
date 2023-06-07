@@ -8,7 +8,6 @@ import { db } from "./config/firebase";
 import { ThemeProvider } from "./config/ThemeProvider";
 import { validationRules } from "./utils/validationRules";
 import { handleExpirationDateDisplay } from "./utils/handleExpirationDateDisplay";
-import BackgroundBlur from "./assets/Background-blur.png";
 import SafetySymbol from "./assets/Safety-symbol.svg";
 
 export default function App() {
@@ -82,27 +81,19 @@ export default function App() {
                   setShouldShowCardBack,
                 }}
               />
-              <Flex direction="column" gap={34}>
-                <Box
-                  sx={(theme) => ({
-                    backgroundImage: `url(${BackgroundBlur})`,
-                    backgroundRepeat: "no-repeat",
-                    border: `1px solid ${theme.colors.gray[7]}`,
-                    borderRadius: 16,
-                    boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.25)",
-                    height: "fit-content",
-                    padding: shouldShowCardBack ? "0" : "11px 24px",
-                    width: 280,
-                  })}
-                >
-                  <CreditCardDisplay
-                    cardProps={{
+              <Flex direction="column" gap={34} w={280}>
+                <CreditCardDisplay
+                  cardProps={{
+                    data: {
+                      name: formik.values.name,
+                      cardNumber: formik.values.cardNumber,
+                      cardVerificationValue:
+                        formik.values.cardVerificationValue,
                       expirationDate,
-                      formik,
-                      shouldShowCardBack,
-                    }}
-                  />
-                </Box>
+                    },
+                    shouldShowCardBack,
+                  }}
+                />
                 <Flex align="center" gap={8} m="0 auto">
                   <Image height={15} src={SafetySymbol} width={15} />
                   <Text color="gray.2">Seus dados estão seguros</Text>
