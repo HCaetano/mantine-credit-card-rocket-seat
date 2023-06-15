@@ -1,6 +1,5 @@
 import ReactCardFlip from "react-card-flip";
 import { Box, Flex, Image, Text, TextInput } from "@mantine/core";
-import { handleExpirationDateDisplay } from "../../utils/handleExpirationDateDisplay";
 import BackgroundBlur from "../../assets/Background-blur.png";
 import ContactlessPayment from "../../assets/Contactless-payment.svg";
 import VisaLogo from "../../assets/Visa.svg";
