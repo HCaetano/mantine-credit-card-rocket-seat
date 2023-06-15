@@ -1,9 +1,16 @@
 import ReactCardFlip from "react-card-flip";
 import { Box, Flex, Image, Text, TextInput } from "@mantine/core";
-import { CreditCardDisplayType } from "../../pages/CreditCardDisplay/CreditCardDisplay";
+import { handleExpirationDateDisplay } from "../../utils/handleExpirationDateDisplay";
 import BackgroundBlur from "../../assets/Background-blur.png";
 import ContactlessPayment from "../../assets/Contactless-payment.svg";
 import VisaLogo from "../../assets/Visa.svg";
+
+export type CreditCardType = {
+  cardProps: {
+    data: any;
+    shouldShowCardBack?: boolean;
+  };
+};
 
 const handleCardNumberDisplay = (cardNumber: string) => {
   const isNumeric = /^-?\d+$/.test(cardNumber);
@@ -29,7 +36,7 @@ const handleNameDisplay = (name: string) => {
   return name;
 };
 
-function CreditCard(props: CreditCardDisplayType) {
+function CreditCard(props: CreditCardType) {
   const { data, shouldShowCardBack } = props.cardProps;
 
   return (
@@ -42,6 +49,7 @@ function CreditCard(props: CreditCardDisplayType) {
         boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.25)",
         height: "fit-content",
         padding: shouldShowCardBack ? "0" : "11px 24px",
+        width: 280,
       })}
     >
       <ReactCardFlip isFlipped={shouldShowCardBack} flipDirection="horizontal">
@@ -106,13 +114,6 @@ function CreditCard(props: CreditCardDisplayType) {
                 <>&#x2022; &#x2022;/&#x2022; &#x2022;</>
               )}
             </Text>
-            {/* <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-            {handleExpirationDateDisplay(data.expirationDate) ? (
-              handleExpirationDateDisplay(data.expirationDate)
-            ) : (
-              <>&#x2022; &#x2022;/&#x2022; &#x2022;</>
-            )}
-          </Text> */}
           </Flex>
         </Flex>
         <Flex direction="column" h={169}>

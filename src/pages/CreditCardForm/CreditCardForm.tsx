@@ -3,6 +3,7 @@ import { ActionIcon, Flex, Text } from "@mantine/core";
 import { DatePickerInput, DateValue } from "@mantine/dates";
 import { IconQuestionMark } from "@tabler/icons-react";
 import TextInputCustom from "../../components/TextInputCustom/TextInputCustom";
+import { handleExpirationDateDisplay } from "../../utils/handleExpirationDateDisplay";
 
 type CreditCardFormType = {
   formProps: {

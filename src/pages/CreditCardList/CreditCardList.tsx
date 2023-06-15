@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { collection, DocumentData, getDocs } from "firebase/firestore";
 import { Flex } from "@mantine/core";
-import CreditCardDisplay from "../../components/CreditCard/CreditCard";
+import CreditCard from "../../components/CreditCard/CreditCard";
+import { ThemeProvider } from "../../config/ThemeProvider";
 import { db } from "../../config/firebase";
 
 function CreditCardList() {
@@ -19,11 +20,11 @@ function CreditCardList() {
   }, []);
 
   return (
-    <Flex>
-      {creditCards.length > 0 &&
-        creditCards.map((card) => (
-          <Flex direction="column" w={280}>
-            <CreditCardDisplay
+    <ThemeProvider>
+      <Flex bg="gray.9" h="100vh" wrap="wrap">
+        {creditCards.length > 0 &&
+          creditCards.map((card) => (
+            <CreditCard
               cardProps={{
                 data: {
                   name: card.name,
@@ -31,12 +32,11 @@ function CreditCardList() {
                   cardVerificationValue: card.cardVerificationValue,
                   expirationDate: card.expirationDate,
                 },
-                isGalleryPage: true,
               }}
             />
-          </Flex>
-        ))}
-    </Flex>
+          ))}
+      </Flex>
+    </ThemeProvider>
   );
 }
 

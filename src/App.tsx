@@ -3,7 +3,8 @@ import { useFormik } from "formik";
 import { debounce } from "lodash";
 import { Anchor, Box, Button, Center, Flex, Image, Text } from "@mantine/core";
 import { addDoc, collection, DocumentData, getDocs } from "firebase/firestore";
-import { CreditCardDisplay, CreditCardForm } from "./pages";
+import { CreditCardForm } from "./pages";
+import CreditCard from "./components/CreditCard/CreditCard";
 import { db } from "./config/firebase";
 import { ThemeProvider } from "./config/ThemeProvider";
 import { validationRules } from "./utils/validationRules";
@@ -82,7 +83,7 @@ export default function App() {
                 }}
               />
               <Flex direction="column" gap={34} w={280}>
-                <CreditCardDisplay
+                <CreditCard
                   cardProps={{
                     data: {
                       name: formik.values.name,
