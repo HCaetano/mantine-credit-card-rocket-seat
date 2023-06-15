@@ -7,8 +7,7 @@ import { CreditCardForm } from "./pages";
 import CreditCard from "./components/CreditCard/CreditCard";
 import { db } from "./config/firebase";
 import { ThemeProvider } from "./config/ThemeProvider";
-import { validationRules } from "./utils/validationRules";
-import { handleExpirationDateDisplay } from "./utils/handleExpirationDateDisplay";
+import { handleDateFormat, validationRules } from "./utils";
 import SafetySymbol from "./assets/Safety-symbol.svg";
 
 export default function App() {
@@ -24,7 +23,7 @@ export default function App() {
       await addDoc(creditCardsCollection, {
         cardNumber: values.cardNumber,
         cardVerificationValue: values.cardVerificationValue,
-        expirationDate: handleExpirationDateDisplay(expirationDate),
+        expirationDate: handleDateFormat(expirationDate),
         name: values.name,
       });
     },

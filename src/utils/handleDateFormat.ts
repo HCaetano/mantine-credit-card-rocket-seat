@@ -1,4 +1,4 @@
-export function handleExpirationDateDisplay(expirationDate: Date | null) {
+export function handleDateFormat(expirationDate: Date | null) {
   if (!expirationDate) {
     return null;
   }

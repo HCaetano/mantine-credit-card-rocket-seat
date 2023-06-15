@@ -1,5 +1,6 @@
 import ReactCardFlip from "react-card-flip";
 import { Box, Flex, Image, Text, TextInput } from "@mantine/core";
+import { handleDateFormat } from "../../utils";
 import BackgroundBlur from "../../assets/Background-blur.png";
 import ContactlessPayment from "../../assets/Contactless-payment.svg";
 import VisaLogo from "../../assets/Visa.svg";
@@ -19,6 +20,18 @@ const handleCardNumberDisplay = (cardNumber: string) => {
   }
 
   return cardNumber.split("").join(" ");
+};
+
+const handleDateDisplay = (expirationDate: Date | null) => {
+  if (expirationDate && typeof expirationDate === "string") {
+    return expirationDate;
+  }
+
+  if (expirationDate) {
+    return handleDateFormat(expirationDate);
+  }
+
+  return <>&#x2022; &#x2022;/&#x2022; &#x2022;</>;
 };
 
 const handleNameDisplay = (name: string) => {
@@ -107,11 +120,7 @@ function CreditCard(props: CreditCardType) {
               {handleNameDisplay(data.name)}
             </Text>
             <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-              {data.expirationDate ? (
-                data.expirationDate
-              ) : (
-                <>&#x2022; &#x2022;/&#x2022; &#x2022;</>
-              )}
+              {handleDateDisplay(data.expirationDate)}
             </Text>
           </Flex>
         </Flex>
