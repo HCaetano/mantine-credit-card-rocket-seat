@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { debounce } from "lodash";
-import { Box, Button, Center, Flex, Image, Text } from "@mantine/core";
+import { Anchor, Box, Button, Center, Flex, Image, Text } from "@mantine/core";
+import { addDoc, collection, DocumentData, getDocs } from "firebase/firestore";
+import { CreditCardForm } from "./pages";
+import CreditCard from "./components/CreditCard/CreditCard";
+import { db } from "./config/firebase";
 import { ThemeProvider } from "./config/ThemeProvider";
-import BackgroundBlur from "./assets/Background-blur.png";
+import { handleDateFormat, validationRules } from "./utils";
 import SafetySymbol from "./assets/Safety-symbol.svg";
-import { validationRules } from "./utils/validationRules";
-import { CreditCardDisplay, CreditCardForm } from "./components";
 
 export default function App() {
+  const creditCardsCollection = collection(db, "credit-cards");
   const formik = useFormik({
     initialValues: {
       cardNumber: "",
@@ -16,13 +19,19 @@ export default function App() {
       name: "",
     },
     validationSchema: validationRules,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      await addDoc(creditCardsCollection, {
+        cardNumber: values.cardNumber,
+        cardVerificationValue: values.cardVerificationValue,
+        expirationDate: handleDateFormat(expirationDate),
+        name: values.name,
+      });
     },
   });
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
   const [datePickerTouched, setDatePickerTouched] = useState(false);
+  const [creditCards, setCreditCards] = useState<DocumentData[]>([]);
 
   const handleTouching = () => {
     setDatePickerTouched(true);
@@ -32,11 +41,23 @@ export default function App() {
     setShouldShowCardBack(false);
   }, 500);
 
+  const getCards = async () => {
+    const cards = await getDocs(creditCardsCollection);
+    const cardsList = cards.docs.map((doc) => doc.data());
+    setCreditCards(cardsList);
+  };
+
+  useEffect(() => {
+    getCards();
+  }, []);
+
   return (
     <ThemeProvider>
       <Center
         sx={(theme) => ({
           backgroundColor: theme.colors.gray[9],
+          display: "flex",
+          flexDirection: "column",
           height: "100vh",
         })}
       >
@@ -60,27 +81,19 @@ export default function App() {
                   setShouldShowCardBack,
                 }}
               />
-              <Flex direction="column" gap={34}>
-                <Box
-                  sx={(theme) => ({
-                    backgroundImage: `url(${BackgroundBlur})`,
-                    backgroundRepeat: "no-repeat",
-                    border: `1px solid ${theme.colors.gray[7]}`,
-                    borderRadius: "16px",
-                    boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.25)",
-                    height: "fit-content",
-                    padding: shouldShowCardBack ? "0" : "11px 24px",
-                    width: "280px",
-                  })}
-                >
-                  <CreditCardDisplay
-                    cardProps={{
+              <Flex direction="column" gap={34} w={280}>
+                <CreditCard
+                  cardProps={{
+                    data: {
+                      name: formik.values.name,
+                      cardNumber: formik.values.cardNumber,
+                      cardVerificationValue:
+                        formik.values.cardVerificationValue,
                       expirationDate,
-                      formik,
-                      shouldShowCardBack,
-                    }}
-                  />
-                </Box>
+                    },
+                    shouldShowCardBack,
+                  }}
+                />
                 <Flex align="center" gap={8} m="0 auto">
                   <Image height={15} src={SafetySymbol} width={15} />
                   <Text color="gray.2">Seus dados estão seguros</Text>
@@ -120,6 +133,18 @@ export default function App() {
             </Button>
           </form>
         </Box>
+        <Flex
+          sx={() => ({
+            alignItems: "end",
+            height: 40,
+          })}
+        >
+          {creditCards.length > 0 && (
+            <Anchor color="purple.2" href="/cards" type="button">
+              Confira seus cartões
+            </Anchor>
+          )}
+        </Flex>
       </Center>
     </ThemeProvider>
   );

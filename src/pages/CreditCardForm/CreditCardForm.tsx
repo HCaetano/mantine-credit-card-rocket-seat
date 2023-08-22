@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 import { ActionIcon, Flex, Text } from "@mantine/core";
-import { DatePickerInput } from "@mantine/dates";
+import { DatePickerInput, DateValue } from "@mantine/dates";
 import { IconQuestionMark } from "@tabler/icons-react";
-import TextInputCustom from "./TextInputCustom";
+import TextInputCustom from "../../components/TextInputCustom/TextInputCustom";
 
 type CreditCardFormType = {
   formProps: {
@@ -11,7 +11,7 @@ type CreditCardFormType = {
     formik: any;
     handleTouching: () => void;
     handleTyping: () => void;
-    setExpirationDate: Dispatch<SetStateAction<Date | null>>;
+    setExpirationDate: (value: DateValue) => void;
     setShouldShowCardBack: Dispatch<SetStateAction<boolean>>;
   };
 };
