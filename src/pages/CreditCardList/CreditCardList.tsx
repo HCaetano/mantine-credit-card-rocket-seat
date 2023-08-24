@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { collection, DocumentData, getDocs } from "firebase/firestore";
-import { Box, Group } from "@mantine/core";
+import { Box, Button, Flex, Group, Space } from "@mantine/core";
+import { IconArrowBack } from "@tabler/icons-react";
 import CreditCard from "../../components/CreditCard/CreditCard";
 import { ThemeProvider } from "../../config/ThemeProvider";
 import { db } from "../../config/firebase";
@@ -21,14 +22,19 @@ function CreditCardList() {
 
   return (
     <ThemeProvider>
-      <Box
-        sx={(theme) => ({
-          backgroundColor: theme.colors.gray[9],
-          display: "flex",
-          height: "100vh",
-        })}
-      >
-        <Group m="0 auto" p={40}>
+      <Flex bg="gray.9" direction="column" h="100vh" p={40}>
+        <Button
+          color="purple.2"
+          component="a"
+          href="/"
+          leftIcon={<IconArrowBack size="0.9rem" />}
+          maw={100}
+          mb={20}
+          variant="outline"
+        >
+          Voltar
+        </Button>
+        <Group m="0 auto">
           {creditCards.length > 0 &&
             creditCards.map((card) => (
               <Box m="0 auto">
@@ -45,7 +51,7 @@ function CreditCardList() {
               </Box>
             ))}
         </Group>
-      </Box>
+      </Flex>
     </ThemeProvider>
   );
 }
