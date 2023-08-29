@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { collection, DocumentData, getDocs } from "firebase/firestore";
-import { Box, Button, Flex, Group, Space } from "@mantine/core";
+import { Box, Button, Flex, Group } from "@mantine/core";
 import { IconArrowBack } from "@tabler/icons-react";
 import CreditCard from "../../components/CreditCard/CreditCard";
 import { ThemeProvider } from "../../config/ThemeProvider";
@@ -18,6 +18,7 @@ function CreditCardList() {
 
   useEffect(() => {
     getCards();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
