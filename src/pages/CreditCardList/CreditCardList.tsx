@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { collection, DocumentData, getDocs } from "firebase/firestore";
-import { Box, Button, Flex, Group } from "@mantine/core";
+import { Box, Button, Center, Flex, Group, Loader } from "@mantine/core";
 import { IconArrowBack } from "@tabler/icons-react";
 import CreditCard from "../../components/CreditCard/CreditCard";
 import { ThemeProvider } from "../../config/ThemeProvider";
@@ -35,8 +35,8 @@ function CreditCardList() {
         >
           Voltar
         </Button>
-        <Group m="0 auto">
-          {creditCards.length > 0 &&
+        <Group>
+          {creditCards.length > 0 ? (
             creditCards.map((card) => (
               <Box m="0 auto">
                 <CreditCard
@@ -50,7 +50,12 @@ function CreditCardList() {
                   }}
                 />
               </Box>
-            ))}
+            ))
+          ) : (
+            <Center h={600} w="100%">
+              <Loader m="0 auto" />
+            </Center>
+          )}
         </Group>
       </Flex>
     </ThemeProvider>
