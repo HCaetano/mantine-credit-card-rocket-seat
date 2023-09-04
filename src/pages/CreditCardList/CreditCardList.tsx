@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { collection, DocumentData, getDocs } from "firebase/firestore";
-import { Box, Button, Center, Flex, Group, Loader } from "@mantine/core";
+import { Anchor, Button, Center, Flex, Group, Loader } from "@mantine/core";
 import { IconArrowBack } from "@tabler/icons-react";
 import CreditCard from "../../components/CreditCard/CreditCard";
 import { ThemeProvider } from "../../config/ThemeProvider";
@@ -12,7 +12,15 @@ function CreditCardList() {
 
   const getCards = async () => {
     const cards = await getDocs(creditCardsCollection);
-    const cardsList = cards.docs.map((doc) => doc.data());
+    const cardsList = cards.docs.map((doc) => {
+      const data = doc.data();
+      const id = doc.id;
+
+      return {
+        ...data,
+        id,
+      };
+    });
     setCreditCards(cardsList);
   };
 
@@ -38,7 +46,7 @@ function CreditCardList() {
         <Group>
           {creditCards.length > 0 ? (
             creditCards.map((card) => (
-              <Box m="0 auto">
+              <Anchor href={`/card/${card.id}`} m="0 auto">
                 <CreditCard
                   cardProps={{
                     data: {
@@ -49,7 +57,7 @@ function CreditCardList() {
                     },
                   }}
                 />
-              </Box>
+              </Anchor>
             ))
           ) : (
             <Center h={600} w="100%">
