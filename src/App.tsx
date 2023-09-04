@@ -49,6 +49,7 @@ export default function App() {
 
   useEffect(() => {
     getCards();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
