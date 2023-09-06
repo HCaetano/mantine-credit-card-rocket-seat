@@ -39,6 +39,7 @@ function CreditCardList() {
           leftIcon={<IconArrowBack size="0.9rem" />}
           maw={100}
           mb={20}
+          mih={40}
           variant="outline"
         >
           Voltar
