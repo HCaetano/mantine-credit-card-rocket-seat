@@ -5,7 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Anchor, Box, Button, Center, Flex, Image, Text } from "@mantine/core";
 import { addDoc, collection, DocumentData, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase";
-import { CreditCard } from "../../components/CreditCard";
+import { CreditCard } from "../../components";
 import { CreditCardForm } from "../CreditCardForm";
 import { validationRules, handleDateFormat } from "../../utils";
 import SafetySymbol from "../../assets/Safety-symbol.svg";

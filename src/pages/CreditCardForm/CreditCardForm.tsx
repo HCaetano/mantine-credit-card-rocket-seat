@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { ActionIcon, Flex, Text } from "@mantine/core";
 import { DatePickerInput, DateValue } from "@mantine/dates";
 import { IconQuestionMark } from "@tabler/icons-react";
-import TextInputCustom from "../../components/TextInputCustom/TextInputCustom";
+import { TextInputCustom } from "../../components";
 
 type CreditCardFormType = {
   formProps: {

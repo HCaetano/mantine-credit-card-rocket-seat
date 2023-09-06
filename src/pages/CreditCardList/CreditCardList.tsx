@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { collection, DocumentData, getDocs } from "firebase/firestore";
 import { Anchor, Button, Center, Flex, Group, Loader } from "@mantine/core";
 import { IconArrowBack } from "@tabler/icons-react";
-import CreditCard from "../../components/CreditCard/CreditCard";
+import { CreditCard } from "../../components";
 import { ThemeProvider } from "../../config/ThemeProvider";
 import { db } from "../../config/firebase";
 

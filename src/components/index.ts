@@ -1,3 +1,4 @@
+import { CreditCard } from "./CreditCard";
 import { TextInputCustom } from "./TextInputCustom";
 
-export { TextInputCustom };
+export { CreditCard, TextInputCustom };
