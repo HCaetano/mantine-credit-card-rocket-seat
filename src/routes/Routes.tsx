@@ -1,7 +1,6 @@
 import type { ReactElement } from "react";
 import { Route, BrowserRouter, Routes as RouterRoutes } from "react-router-dom";
-import { CreditCardDetails, CreditCardList, Error } from "../pages";
-import Home from "../pages/Home/Home";
+import { CreditCardDetails, CreditCardList, Error, Home } from "../pages";
 
 const Routes = (): ReactElement => {
   return (
