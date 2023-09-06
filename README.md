@@ -1,5 +1,7 @@
 # Credit Card Handler
 
+![image](https://github.com/HCaetano/mantine-firebase-credit-card-handler/assets/20730250/0a450fef-3ec5-4fb0-bfb0-6bfb09bee15a)
+
 You can check it [here](https://credit-card-register.web.app/). This README is under construction.
 
 ## About
