@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { collection, DocumentData, getDocs } from "firebase/firestore";
 import { Anchor, Button, Center, Flex, Group, Loader } from "@mantine/core";
 import { IconArrowBack } from "@tabler/icons-react";
-import CreditCard from "../../components/CreditCard/CreditCard";
+import { CreditCard } from "../../components";
 import { ThemeProvider } from "../../config/ThemeProvider";
 import { db } from "../../config/firebase";
 
@@ -39,6 +39,7 @@ function CreditCardList() {
           leftIcon={<IconArrowBack size="0.9rem" />}
           maw={100}
           mb={20}
+          mih={40}
           variant="outline"
         >
           Voltar
