@@ -31,7 +31,7 @@ function CreditCardList() {
 
   return (
     <ThemeProvider>
-      <Flex bg="gray.9" direction="column" h="100vh" p={40}>
+      <Flex bg="gray.9" direction="column" mih="100vh" p={40}>
         <Button
           color="purple.2"
           component="a"
@@ -45,7 +45,7 @@ function CreditCardList() {
           Voltar
         </Button>
         <Group>
-          {creditCards.length > 0 ? (
+          {creditCards?.length > 0 ? (
             creditCards.map((card) => (
               <Anchor href={`/card/${card.id}`} m="0 auto">
                 <CreditCard

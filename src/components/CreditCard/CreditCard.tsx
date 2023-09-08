@@ -87,29 +87,29 @@ function CreditCard(props: CreditCardType) {
           </Flex>
           <Flex justify="space-between" mt={40}>
             <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-              {data.cardNumber.length > 0 ? (
-                handleCardNumberDisplay(data.cardNumber.slice(0, 4))
+              {data.cardNumber?.length > 0 ? (
+                handleCardNumberDisplay(data.cardNumber?.slice(0, 4))
               ) : (
                 <>&#x2022; &#x2022; &#x2022; &#x2022;</>
               )}
             </Text>
             <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-              {data.cardNumber.length > 4 ? (
-                handleCardNumberDisplay(data.cardNumber.slice(4, 8))
+              {data.cardNumber?.length > 4 ? (
+                handleCardNumberDisplay(data.cardNumber?.slice(4, 8))
               ) : (
                 <>&#x2022; &#x2022; &#x2022; &#x2022;</>
               )}
             </Text>
             <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-              {data.cardNumber.length > 8 ? (
-                handleCardNumberDisplay(data.cardNumber.slice(8, 12))
+              {data.cardNumber?.length > 8 ? (
+                handleCardNumberDisplay(data.cardNumber?.slice(8, 12))
               ) : (
                 <>&#x2022; &#x2022; &#x2022; &#x2022;</>
               )}
             </Text>
             <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-              {data.cardNumber.length > 12 ? (
-                handleCardNumberDisplay(data.cardNumber.slice(12, 16))
+              {data.cardNumber?.length > 12 ? (
+                handleCardNumberDisplay(data.cardNumber?.slice(12, 16))
               ) : (
                 <>&#x2022; &#x2022; &#x2022; &#x2022;</>
               )}
@@ -136,8 +136,8 @@ function CreditCard(props: CreditCardType) {
           <Flex align="center" m="46px auto 0">
             <TextInput
               rightSection={
-                data.cardVerificationValue.length > 0
-                  ? data.cardVerificationValue.substring(0, 3)
+                data.cardVerificationValue?.length > 0
+                  ? data.cardVerificationValue?.substring(0, 3)
                   : "***"
               }
             />
