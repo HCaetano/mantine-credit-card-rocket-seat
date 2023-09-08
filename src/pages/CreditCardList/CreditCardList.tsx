@@ -47,14 +47,10 @@ function CreditCardList() {
           creditCards.map((card) => (
             <Anchor href={`/card/${card.id}`} m="0 auto">
               <CreditCard
-                cardProps={{
-                  data: {
-                    name: card.name,
-                    cardNumber: card.cardNumber,
-                    cardVerificationValue: card.cardVerificationValue,
-                    expirationDate: card.expirationDate,
-                  },
-                }}
+                name={card.name}
+                cardNumber={card.cardNumber}
+                cardVerificationValue={card.cardVerificationValue}
+                expirationDate={card.expirationDate}
               />
             </Anchor>
           ))

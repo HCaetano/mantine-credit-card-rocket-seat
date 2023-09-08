@@ -49,14 +49,10 @@ function CreditCardDetails() {
     <Flex bg="gray.9" direction="column" mih="100vh" p={40}>
       <Center h={600} w="100%">
         <CreditCard
-          cardProps={{
-            data: {
-              name: cardData.name,
-              cardNumber: cardData.cardNumber,
-              cardVerificationValue: cardData.cardVerificationValue,
-              expirationDate: cardData.expirationDate,
-            },
-          }}
+          name={cardData.name}
+          cardNumber={cardData.cardNumber}
+          cardVerificationValue={cardData.cardVerificationValue}
+          expirationDate={cardData.expirationDate}
         />
       </Center>
     </Flex>

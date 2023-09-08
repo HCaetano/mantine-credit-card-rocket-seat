@@ -89,15 +89,11 @@ function Home() {
             />
             <Flex direction="column" gap={34} w={280}>
               <CreditCard
-                cardProps={{
-                  data: {
-                    name: formik.values.name,
-                    cardNumber: formik.values.cardNumber,
-                    cardVerificationValue: formik.values.cardVerificationValue,
-                    expirationDate,
-                  },
-                  shouldShowCardBack,
-                }}
+                name={formik.values.name}
+                cardNumber={formik.values.cardNumber}
+                cardVerificationValue={formik.values.cardVerificationValue}
+                expirationDate={expirationDate}
+                shouldShowCardBack={shouldShowCardBack}
               />
               <Flex align="center" gap={8} m="0 auto">
                 <Image height={15} src={SafetySymbol} width={15} />

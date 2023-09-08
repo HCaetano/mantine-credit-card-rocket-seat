@@ -6,10 +6,11 @@ import ContactlessPayment from "../../assets/Contactless-payment.svg";
 import VisaLogo from "../../assets/Visa.svg";
 
 export type CreditCardType = {
-  cardProps: {
-    data: any;
-    shouldShowCardBack?: boolean;
-  };
+  cardNumber: string;
+  cardVerificationValue: string;
+  expirationDate: Date | null;
+  name: string;
+  shouldShowCardBack?: boolean;
 };
 
 const handleCardNumberDisplay = (cardNumber: string) => {
@@ -49,7 +50,13 @@ const handleNameDisplay = (name: string) => {
 };
 
 function CreditCard(props: CreditCardType) {
-  const { data, shouldShowCardBack } = props.cardProps;
+  const {
+    cardNumber,
+    cardVerificationValue,
+    expirationDate,
+    name,
+    shouldShowCardBack,
+  } = props;
 
   return (
     <Box
@@ -87,29 +94,29 @@ function CreditCard(props: CreditCardType) {
           </Flex>
           <Flex justify="space-between" mt={40}>
             <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-              {data.cardNumber?.length > 0 ? (
-                handleCardNumberDisplay(data.cardNumber?.slice(0, 4))
+              {cardNumber?.length > 0 ? (
+                handleCardNumberDisplay(cardNumber?.slice(0, 4))
               ) : (
                 <>&#x2022; &#x2022; &#x2022; &#x2022;</>
               )}
             </Text>
             <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-              {data.cardNumber?.length > 4 ? (
-                handleCardNumberDisplay(data.cardNumber?.slice(4, 8))
+              {cardNumber?.length > 4 ? (
+                handleCardNumberDisplay(cardNumber?.slice(4, 8))
               ) : (
                 <>&#x2022; &#x2022; &#x2022; &#x2022;</>
               )}
             </Text>
             <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-              {data.cardNumber?.length > 8 ? (
-                handleCardNumberDisplay(data.cardNumber?.slice(8, 12))
+              {cardNumber?.length > 8 ? (
+                handleCardNumberDisplay(cardNumber?.slice(8, 12))
               ) : (
                 <>&#x2022; &#x2022; &#x2022; &#x2022;</>
               )}
             </Text>
             <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-              {data.cardNumber?.length > 12 ? (
-                handleCardNumberDisplay(data.cardNumber?.slice(12, 16))
+              {cardNumber?.length > 12 ? (
+                handleCardNumberDisplay(cardNumber?.slice(12, 16))
               ) : (
                 <>&#x2022; &#x2022; &#x2022; &#x2022;</>
               )}
@@ -117,10 +124,10 @@ function CreditCard(props: CreditCardType) {
           </Flex>
           <Flex justify="space-between" mt={24}>
             <Text color="gray.0" opacity={0.5} size="md">
-              {handleNameDisplay(data.name)}
+              {handleNameDisplay(name)}
             </Text>
             <Text color="gray.0" opacity={0.5} size="md" weight={600}>
-              {handleDateDisplay(data.expirationDate)}
+              {handleDateDisplay(expirationDate)}
             </Text>
           </Flex>
         </Flex>
@@ -136,8 +143,8 @@ function CreditCard(props: CreditCardType) {
           <Flex align="center" m="46px auto 0">
             <TextInput
               rightSection={
-                data.cardVerificationValue?.length > 0
-                  ? data.cardVerificationValue?.substring(0, 3)
+                cardVerificationValue?.length > 0
+                  ? cardVerificationValue?.substring(0, 3)
                   : "***"
               }
             />
