@@ -1,12 +1,14 @@
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { doc, DocumentData, getDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../config/firebase";
-import { useState, useEffect } from "react";
 
 function CreditCardDetails() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [cardData, setCardData] = useState<DocumentData | undefined>();
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -14,25 +16,23 @@ function CreditCardDetails() {
 
       getDoc(docRef)
         .then((document) => {
+          console.log(document.data());
+
           if (document.data()) {
             setCardData(document.data());
+          } else {
+            setError(true);
           }
-          // else {
-          //   setError("Document not found.");
-          // }
         })
-        .catch((error) => {
-          // setError("Error getting document: " + error.message);
+        .catch(() => {
+          setError(true);
         });
     }
   }, [id]);
 
-  // redirect to error page
-  // set up a loader
-
-  // if (error) {
-  //   return <div>{error}</div>;
-  // }
+  if (error) {
+    navigate("/error");
+  }
 
   // if (!cardData) {
   //   return <div>Loading...</div>;
