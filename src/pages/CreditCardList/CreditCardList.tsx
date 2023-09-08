@@ -3,7 +3,6 @@ import { collection, DocumentData, getDocs } from "firebase/firestore";
 import { Anchor, Button, Center, Flex, Group, Loader } from "@mantine/core";
 import { IconArrowBack } from "@tabler/icons-react";
 import { CreditCard } from "../../components";
-import { ThemeProvider } from "../../config/ThemeProvider";
 import { db } from "../../config/firebase";
 
 function CreditCardList() {
@@ -30,44 +29,38 @@ function CreditCardList() {
   }, []);
 
   return (
-    <ThemeProvider>
-      <Flex bg="gray.9" direction="column" h="100vh" p={40}>
-        <Button
-          color="purple.2"
-          component="a"
-          href="/"
-          leftIcon={<IconArrowBack size="0.9rem" />}
-          maw={100}
-          mb={20}
-          mih={40}
-          variant="outline"
-        >
-          Voltar
-        </Button>
-        <Group>
-          {creditCards.length > 0 ? (
-            creditCards.map((card) => (
-              <Anchor href={`/card/${card.id}`} m="0 auto">
-                <CreditCard
-                  cardProps={{
-                    data: {
-                      name: card.name,
-                      cardNumber: card.cardNumber,
-                      cardVerificationValue: card.cardVerificationValue,
-                      expirationDate: card.expirationDate,
-                    },
-                  }}
-                />
-              </Anchor>
-            ))
-          ) : (
-            <Center h={600} w="100%">
-              <Loader m="0 auto" />
-            </Center>
-          )}
-        </Group>
-      </Flex>
-    </ThemeProvider>
+    <Flex bg="gray.9" direction="column" mih="100vh" p={40}>
+      <Button
+        color="purple.2"
+        component="a"
+        href="/"
+        leftIcon={<IconArrowBack size="0.9rem" />}
+        maw={100}
+        mb={20}
+        mih={40}
+        variant="outline"
+      >
+        Voltar
+      </Button>
+      <Group>
+        {creditCards?.length > 0 ? (
+          creditCards.map((card) => (
+            <Anchor href={`/card/${card.id}`} m="0 auto">
+              <CreditCard
+                name={card.name}
+                cardNumber={card.cardNumber}
+                cardVerificationValue={card.cardVerificationValue}
+                expirationDate={card.expirationDate}
+              />
+            </Anchor>
+          ))
+        ) : (
+          <Center h={600} w="100%">
+            <Loader m="0 auto" />
+          </Center>
+        )}
+      </Group>
+    </Flex>
   );
 }
 
