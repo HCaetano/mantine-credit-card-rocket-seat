@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { doc, DocumentData, getDoc } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { Center, Flex, Loader } from "@mantine/core";
 import { db } from "../../config/firebase";
+import { CreditCard } from "../../components";
 
 function CreditCardDetails() {
   const { id } = useParams();
@@ -34,11 +35,32 @@ function CreditCardDetails() {
     navigate("/error");
   }
 
-  // if (!cardData) {
-  //   return <div>Loading...</div>;
-  // }
+  if (!cardData) {
+    return (
+      <Flex bg="gray.9" direction="column" mih="100vh" p={40}>
+        <Center h={600} w="100%">
+          <Loader m="0 auto" />
+        </Center>
+      </Flex>
+    );
+  }
 
-  return <div>lolzies</div>;
+  return (
+    <Flex bg="gray.9" direction="column" mih="100vh" p={40}>
+      <Center h={600} w="100%">
+        <CreditCard
+          cardProps={{
+            data: {
+              name: cardData.name,
+              cardNumber: cardData.cardNumber,
+              cardVerificationValue: cardData.cardVerificationValue,
+              expirationDate: cardData.expirationDate,
+            },
+          }}
+        />
+      </Center>
+    </Flex>
+  );
 }
 
 export default CreditCardDetails;
