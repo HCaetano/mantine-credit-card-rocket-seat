@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { deleteDoc, doc, DocumentData, getDoc } from "firebase/firestore";
-import { Button, Center, Flex, Loader, Stack } from "@mantine/core";
+import { Button, Center, Flex, Loader, Stack, Text } from "@mantine/core";
+import { IconArrowBack } from "@tabler/icons-react";
 import { db } from "../../config/firebase";
 import { CreditCard } from "../../components";
 import toast, { Toaster } from "react-hot-toast";
@@ -42,7 +43,12 @@ function CreditCardDetails() {
     await deleteDoc(creditCard)
       .then(() => {
         toast.success("Cartão de crédito removido.");
-        toast.success("Você voltará para a lista de cartões.");
+        toast(() => (
+          <>
+            <Text mr={8}>Você voltará para a lista de cartões.</Text>
+            <IconArrowBack size={20} />
+          </>
+        ));
         setTimeout(() => {
           navigate("/cards");
         }, 3000);
