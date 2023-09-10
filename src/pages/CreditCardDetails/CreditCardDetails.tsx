@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, DocumentData, getDoc } from "firebase/firestore";
-import { Center, Flex, Loader } from "@mantine/core";
+import { Button, Center, Flex, Loader, Stack } from "@mantine/core";
 import { db } from "../../config/firebase";
 import { CreditCard } from "../../components";
 
@@ -9,6 +9,7 @@ function CreditCardDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [cardData, setCardData] = useState<DocumentData | undefined>();
+  const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -30,6 +31,10 @@ function CreditCardDetails() {
         });
     }
   }, [id]);
+
+  const handleCardFlip = () => {
+    setShouldShowCardBack(!shouldShowCardBack);
+  };
 
   if (error) {
     navigate("/error");
@@ -53,7 +58,12 @@ function CreditCardDetails() {
           cardNumber={cardData.cardNumber}
           cardVerificationValue={cardData.cardVerificationValue}
           expirationDate={cardData.expirationDate}
+          shouldShowCardBack={shouldShowCardBack}
         />
+        <Stack>
+          <Button onClick={handleCardFlip}>Virar cartão</Button>
+          <Button />
+        </Stack>
       </Center>
     </Flex>
   );
