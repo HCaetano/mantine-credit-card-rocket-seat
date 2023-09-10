@@ -45,7 +45,13 @@ function CreditCardList() {
       <Group>
         {creditCards?.length > 0 ? (
           creditCards.map((card) => (
-            <Anchor href={`/card/${card.id}`} m="0 auto">
+            <Anchor
+              href={`/card/${card.id}`}
+              m="0 auto"
+              style={{
+                textDecoration: "none",
+              }}
+            >
               <CreditCard
                 name={card.name}
                 cardNumber={card.cardNumber}
