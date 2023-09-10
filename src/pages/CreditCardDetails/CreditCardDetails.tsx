@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { doc, DocumentData, getDoc } from "firebase/firestore";
+import { deleteDoc, doc, DocumentData, getDoc } from "firebase/firestore";
 import { Button, Center, Flex, Loader, Stack } from "@mantine/core";
 import { db } from "../../config/firebase";
 import { CreditCard } from "../../components";
+import toast, { Toaster } from "react-hot-toast";
 
 function CreditCardDetails() {
   const { id } = useParams();
@@ -36,6 +37,21 @@ function CreditCardDetails() {
     setShouldShowCardBack(!shouldShowCardBack);
   };
 
+  const handleDelete = async () => {
+    const creditCard = doc(db, "credit-cards", id ?? "");
+    await deleteDoc(creditCard)
+      .then(() => {
+        toast.success("Cartão de crédito removido.");
+        toast.success("Você voltará para a lista de cartões.");
+        setTimeout(() => {
+          navigate("/cards");
+        }, 3000);
+      })
+      .catch(() => {
+        toast.error("Erro ao remover cartão de crédito.");
+      });
+  };
+
   if (error) {
     navigate("/error");
   }
@@ -62,9 +78,20 @@ function CreditCardDetails() {
         />
         <Stack>
           <Button onClick={handleCardFlip}>Virar cartão</Button>
-          <Button />
+          <Button onClick={handleDelete}>Remover</Button>
         </Stack>
       </Center>
+      <Toaster
+        position="bottom-left"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 2500,
+          style: {
+            background: "#9333EA",
+            color: "#fff",
+          },
+        }}
+      />
     </Flex>
   );
 }
