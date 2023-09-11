@@ -74,7 +74,7 @@ function CreditCardDetails() {
 
   return (
     <Flex bg="gray.9" direction="column" mih="100vh" p={40}>
-      <Center h={600} w="100%">
+      <Center h={600} w="100%" sx={{ gap: "20px" }}>
         <CreditCard
           name={cardData.name}
           cardNumber={cardData.cardNumber}
@@ -83,8 +83,12 @@ function CreditCardDetails() {
           shouldShowCardBack={shouldShowCardBack}
         />
         <Stack>
-          <Button onClick={handleCardFlip}>Virar cartão</Button>
-          <Button onClick={handleDelete}>Remover</Button>
+          <Button color="purple.0" onClick={handleCardFlip}>
+            Virar cartão
+          </Button>
+          <Button color="purple.0" onClick={handleDelete}>
+            Remover
+          </Button>
         </Stack>
       </Center>
       <Toaster
