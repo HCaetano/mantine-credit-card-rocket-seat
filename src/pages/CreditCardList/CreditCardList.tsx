@@ -33,12 +33,12 @@ function CreditCardList() {
       <Button
         color="purple.2"
         component="a"
+        h={40}
         href="/"
         leftIcon={<IconArrowBack size="0.9rem" />}
-        maw={100}
         mb={20}
-        mih={40}
         variant="outline"
+        w={110}
       >
         Voltar
       </Button>
