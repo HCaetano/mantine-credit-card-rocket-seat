@@ -19,7 +19,7 @@ function Home() {
       name: "",
     },
     validationSchema: validationRules,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       await addDoc(creditCardsCollection, {
         cardNumber: values.cardNumber,
         cardVerificationValue: values.cardVerificationValue,
@@ -27,6 +27,9 @@ function Home() {
         name: values.name,
       })
         .then(() => {
+          setExpirationDate(null);
+          setDatePickerTouched(false);
+          resetForm();
           toast.success("Cartão de crédito salvo.");
         })
         .catch(() => {
@@ -77,15 +80,13 @@ function Home() {
         <form onSubmit={formik.handleSubmit}>
           <Flex gap={64}>
             <CreditCardForm
-              formProps={{
-                datePickerTouched,
-                expirationDate,
-                formik,
-                handleTouching,
-                handleTyping,
-                setExpirationDate,
-                setShouldShowCardBack,
-              }}
+              datePickerTouched={datePickerTouched}
+              expirationDate={expirationDate}
+              formik={formik}
+              handleTouching={handleTouching}
+              handleTyping={handleTyping}
+              setExpirationDate={setExpirationDate}
+              setShouldShowCardBack={setShouldShowCardBack}
             />
             <Flex direction="column" gap={34} w={280}>
               <CreditCard
