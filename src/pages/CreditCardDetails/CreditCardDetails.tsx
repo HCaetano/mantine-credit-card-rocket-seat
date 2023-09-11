@@ -73,7 +73,31 @@ function CreditCardDetails() {
   }
 
   return (
-    <Flex bg="gray.9" direction="column" mih="100vh" p={40}>
+    <Flex bg="gray.9" direction="column" h="100vh" p={40}>
+      <Button
+        color="purple.2"
+        component="a"
+        href="/cards"
+        leftIcon={<IconArrowBack size="0.9rem" />}
+        w={110}
+        mb={20}
+        h={40}
+        variant="outline"
+      >
+        Galeria
+      </Button>
+      <Button
+        color="purple.2"
+        component="a"
+        href="/"
+        leftIcon={<IconArrowBack size="0.9rem" />}
+        w={110}
+        mb={20}
+        h={40}
+        variant="outline"
+      >
+        Início
+      </Button>
       <Center h={600} w="100%" sx={{ gap: "20px" }}>
         <CreditCard
           name={cardData.name}
