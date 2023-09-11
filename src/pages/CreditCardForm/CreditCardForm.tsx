@@ -5,15 +5,13 @@ import { IconQuestionMark } from "@tabler/icons-react";
 import { TextInputCustom } from "../../components";
 
 type CreditCardFormType = {
-  formProps: {
-    datePickerTouched: boolean;
-    expirationDate: Date | null;
-    formik: any;
-    handleTouching: () => void;
-    handleTyping: () => void;
-    setExpirationDate: (value: DateValue) => void;
-    setShouldShowCardBack: Dispatch<SetStateAction<boolean>>;
-  };
+  datePickerTouched: boolean;
+  expirationDate: Date | null;
+  formik: any;
+  handleTouching: () => void;
+  handleTyping: () => void;
+  setExpirationDate: (value: DateValue) => void;
+  setShouldShowCardBack: Dispatch<SetStateAction<boolean>>;
 };
 
 function CreditCardForm(props: CreditCardFormType) {
@@ -25,7 +23,7 @@ function CreditCardForm(props: CreditCardFormType) {
     formik,
     setExpirationDate,
     setShouldShowCardBack,
-  } = props.formProps;
+  } = props;
 
   return (
     <Flex direction="column" gap="sm" maw={328}>
