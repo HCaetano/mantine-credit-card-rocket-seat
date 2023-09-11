@@ -33,19 +33,25 @@ function CreditCardList() {
       <Button
         color="purple.2"
         component="a"
+        h={40}
         href="/"
         leftIcon={<IconArrowBack size="0.9rem" />}
-        maw={100}
         mb={20}
-        mih={40}
         variant="outline"
+        w={110}
       >
         Voltar
       </Button>
       <Group>
         {creditCards?.length > 0 ? (
           creditCards.map((card) => (
-            <Anchor href={`/card/${card.id}`} m="0 auto">
+            <Anchor
+              href={`/card/${card.id}`}
+              m="0 auto"
+              style={{
+                textDecoration: "none",
+              }}
+            >
               <CreditCard
                 name={card.name}
                 cardNumber={card.cardNumber}
