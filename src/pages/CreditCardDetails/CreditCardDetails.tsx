@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { deleteDoc, doc, DocumentData, getDoc } from "firebase/firestore";
-import { Button, Center, Flex, Loader, Stack, Text } from "@mantine/core";
+import {
+  Button,
+  Center,
+  Flex,
+  Group,
+  Loader,
+  Stack,
+  Text,
+} from "@mantine/core";
 import { IconArrowBack } from "@tabler/icons-react";
 import { db } from "../../config/firebase";
 import { CreditCard } from "../../components";
@@ -74,58 +82,62 @@ function CreditCardDetails() {
 
   return (
     <Flex bg="gray.9" direction="column" h="100vh" p={40}>
-      <Button
-        color="purple.2"
-        component="a"
-        href="/cards"
-        leftIcon={<IconArrowBack size="0.9rem" />}
-        w={110}
-        mb={20}
-        h={40}
-        variant="outline"
-      >
-        Galeria
-      </Button>
-      <Button
-        color="purple.2"
-        component="a"
-        href="/"
-        leftIcon={<IconArrowBack size="0.9rem" />}
-        w={110}
-        mb={20}
-        h={40}
-        variant="outline"
-      >
-        Início
-      </Button>
-      <Center h={600} w="100%" sx={{ gap: "20px" }}>
-        <CreditCard
-          name={cardData.name}
-          cardNumber={cardData.cardNumber}
-          cardVerificationValue={cardData.cardVerificationValue}
-          expirationDate={cardData.expirationDate}
-          shouldShowCardBack={shouldShowCardBack}
+      <Group>
+        <Button
+          color="purple.2"
+          component="a"
+          href="/cards"
+          leftIcon={<IconArrowBack size="0.9rem" />}
+          w={110}
+          mb={20}
+          h={40}
+          variant="outline"
+        >
+          Galeria
+        </Button>
+        <Button
+          color="purple.2"
+          component="a"
+          href="/"
+          leftIcon={<IconArrowBack size="0.9rem" />}
+          w={110}
+          mb={20}
+          h={40}
+          variant="outline"
+        >
+          Início
+        </Button>
+      </Group>
+      <Flex align="center" justify="center" h="100%">
+        <Flex sx={{ gap: "20px" }}>
+          <CreditCard
+            name={cardData.name}
+            cardNumber={cardData.cardNumber}
+            cardVerificationValue={cardData.cardVerificationValue}
+            expirationDate={cardData.expirationDate}
+            shouldShowCardBack={shouldShowCardBack}
+          />
+          <Stack justify="center">
+            <Button color="purple.0" onClick={handleCardFlip}>
+              Virar cartão
+            </Button>
+            <Button color="purple.0" onClick={handleDelete}>
+              Remover
+            </Button>
+          </Stack>
+        </Flex>
+        <Toaster
+          position="bottom-left"
+          reverseOrder={false}
+          toastOptions={{
+            duration: 2500,
+            style: {
+              background: "#9333EA",
+              color: "#fff",
+            },
+          }}
         />
-        <Stack>
-          <Button color="purple.0" onClick={handleCardFlip}>
-            Virar cartão
-          </Button>
-          <Button color="purple.0" onClick={handleDelete}>
-            Remover
-          </Button>
-        </Stack>
-      </Center>
-      <Toaster
-        position="bottom-left"
-        reverseOrder={false}
-        toastOptions={{
-          duration: 2500,
-          style: {
-            background: "#9333EA",
-            color: "#fff",
-          },
-        }}
-      />
+      </Flex>
     </Flex>
   );
 }
