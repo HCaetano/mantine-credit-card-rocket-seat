@@ -7,7 +7,10 @@ import {
   addDoc,
   collection,
   getCountFromServer,
+  getDocs,
+  query,
   Query,
+  where,
 } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { CreditCard } from "../../components";
@@ -25,23 +28,37 @@ function Home() {
     },
     validationSchema: validationRules,
     onSubmit: async (values, { resetForm }) => {
-      await addDoc(creditCardsCollectionRef, {
-        cardNumber: values.cardNumber,
-        cardVerificationValue: values.cardVerificationValue,
-        expirationDate: handleDateFormat(expirationDate),
-        name: values.name,
-      })
-        .then(() => {
-          setExpirationDate(null);
-          setDatePickerTouched(false);
-          resetForm();
-          toast.success("Cartão de crédito salvo.");
+      const fieldName = "cardNumber";
+      const targetValue = values.cardNumber;
+      const queryResult = query(
+        creditCardsCollectionRef,
+        where(fieldName, "==", targetValue)
+      );
+      const querySnapshot = await getDocs(queryResult);
+      const fetchedCardNumber = querySnapshot.docs[0]?.data().cardNumber;
+
+      if (targetValue !== fetchedCardNumber) {
+        await addDoc(creditCardsCollectionRef, {
+          cardNumber: values.cardNumber,
+          cardVerificationValue: values.cardVerificationValue,
+          expirationDate: handleDateFormat(expirationDate),
+          name: values.name.trim(),
         })
-        .catch(() => {
-          toast.error("Erro ao salvar cartão de crédito.");
-        });
+          .then(() => {
+            setExpirationDate(null);
+            setDatePickerTouched(false);
+            resetForm();
+            toast.success("Cartão de crédito salvo.");
+          })
+          .catch(() => {
+            toast.error("Erro ao salvar cartão de crédito.");
+          });
+      } else {
+        toast.error("Já existe um cartão de crédito com este número.");
+      }
     },
   });
+
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
   const [datePickerTouched, setDatePickerTouched] = useState(false);
