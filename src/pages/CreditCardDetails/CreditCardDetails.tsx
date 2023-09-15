@@ -19,8 +19,8 @@ function CreditCardDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [cardData, setCardData] = useState<DocumentData | undefined>();
-  const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
   const [error, setError] = useState(false);
+  const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -28,8 +28,6 @@ function CreditCardDetails() {
 
       getDoc(docRef)
         .then((document) => {
-          console.log(document.data());
-
           if (document.data()) {
             setCardData(document.data());
           } else {

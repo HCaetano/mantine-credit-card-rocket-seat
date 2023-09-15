@@ -3,7 +3,15 @@ import { useFormik } from "formik";
 import { debounce } from "lodash";
 import toast, { Toaster } from "react-hot-toast";
 import { Anchor, Box, Button, Center, Flex, Image, Text } from "@mantine/core";
-import { addDoc, collection, DocumentData, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getCountFromServer,
+  getDocs,
+  query,
+  Query,
+  where,
+} from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { CreditCard } from "../../components";
 import { CreditCardForm } from "../CreditCardForm";
@@ -11,7 +19,7 @@ import { validationRules, handleDateFormat } from "../../utils";
 import SafetySymbol from "../../assets/Safety-symbol.svg";
 
 function Home() {
-  const creditCardsCollection = collection(db, "credit-cards");
+  const creditCardsCollectionRef = collection(db, "credit-cards");
   const formik = useFormik({
     initialValues: {
       cardNumber: "",
@@ -20,27 +28,41 @@ function Home() {
     },
     validationSchema: validationRules,
     onSubmit: async (values, { resetForm }) => {
-      await addDoc(creditCardsCollection, {
-        cardNumber: values.cardNumber,
-        cardVerificationValue: values.cardVerificationValue,
-        expirationDate: handleDateFormat(expirationDate),
-        name: values.name,
-      })
-        .then(() => {
-          setExpirationDate(null);
-          setDatePickerTouched(false);
-          resetForm();
-          toast.success("Cartão de crédito salvo.");
+      const fieldName = "cardNumber";
+      const targetValue = values.cardNumber;
+      const queryResult = query(
+        creditCardsCollectionRef,
+        where(fieldName, "==", targetValue)
+      );
+      const querySnapshot = await getDocs(queryResult);
+      const fetchedCardNumber = querySnapshot.docs[0]?.data().cardNumber;
+
+      if (targetValue !== fetchedCardNumber) {
+        await addDoc(creditCardsCollectionRef, {
+          cardNumber: values.cardNumber,
+          cardVerificationValue: values.cardVerificationValue,
+          expirationDate: handleDateFormat(expirationDate),
+          name: values.name.trim(),
         })
-        .catch(() => {
-          toast.error("Erro ao salvar cartão de crédito.");
-        });
+          .then(() => {
+            setExpirationDate(null);
+            setDatePickerTouched(false);
+            resetForm();
+            toast.success("Cartão de crédito salvo.");
+          })
+          .catch(() => {
+            toast.error("Erro ao salvar cartão de crédito.");
+          });
+      } else {
+        toast.error("Já existe um cartão de crédito com este número.");
+      }
     },
   });
+
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
   const [datePickerTouched, setDatePickerTouched] = useState(false);
-  const [creditCards, setCreditCards] = useState<DocumentData[]>([]);
+  const [collectionSize, setCollectionSize] = useState(0);
 
   const handleTouching = () => {
     setDatePickerTouched(true);
@@ -50,16 +72,14 @@ function Home() {
     setShouldShowCardBack(false);
   }, 500);
 
-  const getCards = async () => {
-    const cards = await getDocs(creditCardsCollection);
-    const cardsList = cards.docs.map((doc) => doc.data());
-    setCreditCards(cardsList);
+  const getCollectionCount = async (collection: Query<unknown>) => {
+    const snapshot = await getCountFromServer(collection);
+    setCollectionSize(snapshot.data().count);
   };
 
   useEffect(() => {
-    getCards();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    getCollectionCount(creditCardsCollectionRef);
+  }, [creditCardsCollectionRef]);
 
   return (
     <Center
@@ -141,7 +161,7 @@ function Home() {
           height: 40,
         })}
       >
-        {creditCards.length > 0 && (
+        {collectionSize > 0 && (
           <Anchor color="purple.2" href="/cards" type="button">
             Confira seus cartões
           </Anchor>

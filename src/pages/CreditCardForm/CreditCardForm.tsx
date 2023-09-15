@@ -82,11 +82,9 @@ function CreditCardForm(props: CreditCardFormType) {
                 "&:hover": {
                   border: `1.5px solid ${theme.colors.gray[6]}`,
                 },
-
-                "&::placeholder": {
-                  // TODO: placeholder doesn't have the same color as other inputs
-                  color: theme.colors.purple[3],
-                },
+              },
+              placeholder: {
+                color: `${theme.colors.gray[3]} !important`,
               },
             })}
           />
