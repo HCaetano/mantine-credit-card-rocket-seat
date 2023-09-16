@@ -79,15 +79,24 @@ function CreditCardDetails() {
   }
 
   return (
-    <Flex bg="gray.9" direction="column" h="100vh" p={40}>
-      <Group>
+    <Flex
+      bg="gray.9"
+      direction="column"
+      gap={{ base: 32, md: 0 }}
+      h="100vh"
+      p={{ base: 16, md: 32 }}
+    >
+      <Group
+        sx={{
+          justifyContent: "center",
+        }}
+      >
         <Button
           color="purple.2"
           component="a"
           href="/cards"
           leftIcon={<IconArrowBack size="0.9rem" />}
           w={110}
-          mb={20}
           h={40}
           variant="outline"
         >
@@ -99,15 +108,14 @@ function CreditCardDetails() {
           href="/"
           leftIcon={<IconArrowBack size="0.9rem" />}
           w={110}
-          mb={20}
           h={40}
           variant="outline"
         >
           Início
         </Button>
       </Group>
-      <Flex align="center" justify="center" h="100%">
-        <Flex sx={{ gap: "20px" }}>
+      <Flex align="center" justify="center" h={{ md: "100%" }}>
+        <Flex direction={{ base: "column", md: "row" }} gap={24}>
           <CreditCard
             name={cardData.name}
             cardNumber={cardData.cardNumber}

@@ -29,7 +29,7 @@ function CreditCardList() {
   }, []);
 
   return (
-    <Flex bg="gray.9" direction="column" mih="100vh" p={40}>
+    <Flex bg="gray.9" direction="column" mih="100vh" p={{ base: 16, md: 32 }}>
       <Button
         color="purple.2"
         component="a"
@@ -47,7 +47,6 @@ function CreditCardList() {
           creditCards.map((card) => (
             <Anchor
               href={`/card/${card.id}`}
-              m="0 auto"
               style={{
                 textDecoration: "none",
               }}
