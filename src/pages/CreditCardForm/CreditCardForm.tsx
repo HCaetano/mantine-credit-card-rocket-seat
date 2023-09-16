@@ -26,7 +26,7 @@ function CreditCardForm(props: CreditCardFormType) {
   } = props;
 
   return (
-    <Flex direction="column" gap="sm" maw={328}>
+    <Flex direction="column" gap={{ md: "sm" }} maw={328}>
       <Flex direction="column">
         <Text color="gray" size="sm" weight={500}>
           Número do cartão

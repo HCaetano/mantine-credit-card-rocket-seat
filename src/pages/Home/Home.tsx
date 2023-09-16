@@ -92,13 +92,16 @@ function Home() {
     >
       <Box
         sx={(theme) => ({
-          backgroundColor: theme.colors.gray[8],
-          padding: 32,
-          width: 720,
+          height: "auto",
+          // width: 720,
+          "@media (min-width: 768px)": {
+            backgroundColor: theme.colors.gray[8],
+            padding: 32,
+          },
         })}
       >
         <form onSubmit={formik.handleSubmit}>
-          <Flex gap={64}>
+          <Flex direction={{ base: "column", md: "row" }} gap={{ md: 64 }}>
             <CreditCardForm
               datePickerTouched={datePickerTouched}
               expirationDate={expirationDate}
@@ -125,7 +128,7 @@ function Home() {
           <Button
             color="purple.0"
             fullWidth
-            mt={48}
+            mt={{ base: 24, md: 48 }}
             onClick={() => handleTouching()}
             p={16}
             styles={(theme) => ({
