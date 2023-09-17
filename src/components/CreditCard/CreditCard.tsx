@@ -75,16 +75,16 @@ function CreditCard(props: CreditCardType) {
         <Flex direction="column">
           <Flex align="center" justify="space-between">
             <Box
-              sx={() => ({
+              sx={{
                 width: 32,
-              })}
+              }}
             >
               <Image alt="Visa logo" src={VisaLogo} />
             </Box>
             <Box
-              sx={() => ({
+              sx={{
                 width: 32,
-              })}
+              }}
             >
               <Image
                 alt="Contactless Payment symbol"
@@ -122,7 +122,7 @@ function CreditCard(props: CreditCardType) {
               )}
             </Text>
           </Flex>
-          <Flex justify="space-between" mt={24}>
+          <Flex justify="space-between" mt="xl">
             <Text color="gray.0" opacity={0.5} size="md">
               {handleNameDisplay(name)}
             </Text>
@@ -136,7 +136,7 @@ function CreditCard(props: CreditCardType) {
             sx={(theme) => ({
               background: theme.colors.gray[9],
               height: 32,
-              marginTop: 16,
+              marginTop: "md",
               width: "100%",
             })}
           />

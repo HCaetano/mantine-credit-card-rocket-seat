@@ -29,14 +29,14 @@ function CreditCardList() {
   }, []);
 
   return (
-    <Flex bg="gray.9" direction="column" mih="100vh" p={{ base: 16, md: 32 }}>
+    <Flex bg="gray.9" direction="column" mih="100vh" p={{ base: "md", md: 32 }}>
       <Button
         color="purple.2"
         component="a"
         h={40}
         href="/"
-        leftIcon={<IconArrowBack size="0.9rem" />}
-        mb={20}
+        leftIcon={<IconArrowBack size={16} />}
+        mb="xl"
         variant="outline"
         w={110}
       >
@@ -48,6 +48,7 @@ function CreditCardList() {
             <Anchor
               href={`/card/${card.id}`}
               style={{
+                margin: "0 auto",
                 textDecoration: "none",
               }}
             >
