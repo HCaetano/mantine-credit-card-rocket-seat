@@ -9,15 +9,17 @@ import {
   Loader,
   Stack,
   Text,
+  useMantineTheme,
 } from "@mantine/core";
 import { IconArrowBack } from "@tabler/icons-react";
+import toast, { Toaster } from "react-hot-toast";
 import { db } from "../../config/firebase";
 import { CreditCard } from "../../components";
-import toast, { Toaster } from "react-hot-toast";
 
 function CreditCardDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const theme = useMantineTheme();
   const [cardData, setCardData] = useState<DocumentData | undefined>();
   const [error, setError] = useState(false);
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
@@ -52,7 +54,7 @@ function CreditCardDetails() {
         toast(() => (
           <>
             <Text mr={8}>Você voltará para a lista de cartões.</Text>
-            <IconArrowBack size={20} />
+            <IconArrowBack size={16} />
           </>
         ));
         setTimeout(() => {
@@ -82,9 +84,9 @@ function CreditCardDetails() {
     <Flex
       bg="gray.9"
       direction="column"
-      gap={{ base: 32, md: 0 }}
+      gap={{ base: "xl", md: 0 }}
       h="100vh"
-      p={{ base: 16, md: 32 }}
+      p={{ base: "md", md: 32 }}
     >
       <Group
         sx={{
@@ -95,7 +97,7 @@ function CreditCardDetails() {
           color="purple.2"
           component="a"
           href="/cards"
-          leftIcon={<IconArrowBack size="0.9rem" />}
+          leftIcon={<IconArrowBack size={16} />}
           w={110}
           h={40}
           variant="outline"
@@ -106,7 +108,7 @@ function CreditCardDetails() {
           color="purple.2"
           component="a"
           href="/"
-          leftIcon={<IconArrowBack size="0.9rem" />}
+          leftIcon={<IconArrowBack size={16} />}
           w={110}
           h={40}
           variant="outline"
@@ -115,7 +117,7 @@ function CreditCardDetails() {
         </Button>
       </Group>
       <Flex align="center" justify="center" h={{ md: "100%" }}>
-        <Flex direction={{ base: "column", md: "row" }} gap={24}>
+        <Flex direction={{ base: "column", md: "row" }} gap="xl">
           <CreditCard
             name={cardData.name}
             cardNumber={cardData.cardNumber}
@@ -138,8 +140,8 @@ function CreditCardDetails() {
           toastOptions={{
             duration: 2500,
             style: {
-              background: "#9333EA",
-              color: "#fff",
+              background: theme.colors.purple[0],
+              color: "white",
             },
           }}
         />

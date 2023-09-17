@@ -39,7 +39,7 @@ function CreditCardForm(props: CreditCardFormType) {
           color="red.0"
           size="sm"
           style={{
-            height: "22px",
+            height: 22,
           }}
         >
           {formik.touched.cardNumber && formik.errors.cardNumber}
@@ -53,7 +53,7 @@ function CreditCardForm(props: CreditCardFormType) {
           placeholder="Nome como está no cartão"
           {...formik.getFieldProps("name")}
         />
-        <Text color="red.0" size="sm" style={{ height: "22px" }}>
+        <Text color="red.0" size="sm" style={{ height: 22 }}>
           {formik.touched.name && formik.errors.name}
         </Text>
       </Flex>
@@ -88,7 +88,7 @@ function CreditCardForm(props: CreditCardFormType) {
               },
             })}
           />
-          <Text color="red.0" size="sm" style={{ height: "22px" }}>
+          <Text color="red.0" size="sm" style={{ height: 22 }}>
             {datePickerTouched && !expirationDate && "Obrigatório"}
           </Text>
         </Flex>
@@ -118,7 +118,7 @@ function CreditCardForm(props: CreditCardFormType) {
             color="red.0"
             size="sm"
             style={{
-              height: "22px",
+              height: 22,
             }}
           >
             {formik.touched.cardVerificationValue &&

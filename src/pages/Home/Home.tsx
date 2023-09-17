@@ -2,7 +2,16 @@ import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { debounce } from "lodash";
 import toast, { Toaster } from "react-hot-toast";
-import { Anchor, Box, Button, Center, Flex, Image, Text } from "@mantine/core";
+import {
+  Anchor,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Image,
+  Text,
+  useMantineTheme,
+} from "@mantine/core";
 import {
   addDoc,
   collection,
@@ -58,11 +67,16 @@ function Home() {
       }
     },
   });
-
+  const theme = useMantineTheme();
+  const [collectionSize, setCollectionSize] = useState(0);
+  const [datePickerTouched, setDatePickerTouched] = useState(false);
   const [expirationDate, setExpirationDate] = useState<Date | null>(null);
   const [shouldShowCardBack, setShouldShowCardBack] = useState(false);
-  const [datePickerTouched, setDatePickerTouched] = useState(false);
-  const [collectionSize, setCollectionSize] = useState(0);
+
+  const getCollectionCount = async (collection: Query<unknown>) => {
+    const snapshot = await getCountFromServer(collection);
+    setCollectionSize(snapshot.data().count);
+  };
 
   const handleTouching = () => {
     setDatePickerTouched(true);
@@ -71,11 +85,6 @@ function Home() {
   const handleTyping = debounce(function () {
     setShouldShowCardBack(false);
   }, 500);
-
-  const getCollectionCount = async (collection: Query<unknown>) => {
-    const snapshot = await getCountFromServer(collection);
-    setCollectionSize(snapshot.data().count);
-  };
 
   useEffect(() => {
     getCollectionCount(creditCardsCollectionRef);
@@ -93,7 +102,6 @@ function Home() {
       <Box
         sx={(theme) => ({
           height: "auto",
-          // width: 720,
           "@media (min-width: 768px)": {
             backgroundColor: theme.colors.gray[8],
             padding: 32,
@@ -128,9 +136,9 @@ function Home() {
           <Button
             color="purple.0"
             fullWidth
-            mt={{ base: 24, md: 48 }}
+            mt={{ base: "xl", md: 48 }}
             onClick={() => handleTouching()}
-            p={16}
+            p="md"
             styles={(theme) => ({
               root: {
                 boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
@@ -176,8 +184,8 @@ function Home() {
         toastOptions={{
           duration: 5000,
           style: {
-            background: "#9333EA",
-            color: "#fff",
+            background: theme.colors.purple[0],
+            color: "white",
           },
         }}
       />
