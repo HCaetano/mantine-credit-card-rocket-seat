@@ -29,7 +29,13 @@ function CreditCardList() {
   }, []);
 
   return (
-    <Flex bg="gray.9" direction="column" mih="100vh" p={{ base: "md", md: 32 }}>
+    <Flex
+      align="center"
+      bg="gray.9"
+      direction="column"
+      mih="100vh"
+      p={{ base: "md", md: 32 }}
+    >
       <Button
         color="purple.2"
         component="a"
