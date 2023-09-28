@@ -26,13 +26,14 @@ function CreditCardForm(props: CreditCardFormType) {
   } = props;
 
   return (
-    <Flex direction="column" gap={{ md: "sm" }} maw={328}>
+    <Flex direction="column" gap={{ base: "xs", md: "sm" }} maw={328}>
       <Flex direction="column">
         <Text color="gray" size="sm" weight={500}>
           Número do cartão
         </Text>
         <TextInputCustom
           placeholder="4716 8039 0211 9321"
+          type="number"
           {...formik.getFieldProps("cardNumber")}
         />
         <Text

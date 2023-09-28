@@ -6,10 +6,12 @@ type TextInputCustomType = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
   value: string;
+  type?: "text" | "number";
 };
 
 export default function TextInputCustom({
   placeholder,
+  type,
   ...props
 }: TextInputCustomType) {
   return (
@@ -46,6 +48,7 @@ export default function TextInputCustom({
             },
           },
         })}
+        type={type || "text"}
         {...props}
       />
     </>
