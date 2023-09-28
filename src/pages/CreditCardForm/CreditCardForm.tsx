@@ -33,6 +33,7 @@ function CreditCardForm(props: CreditCardFormType) {
         </Text>
         <TextInputCustom
           placeholder="4716 8039 0211 9321"
+          type="number"
           {...formik.getFieldProps("cardNumber")}
         />
         <Text
