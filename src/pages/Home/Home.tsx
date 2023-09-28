@@ -138,7 +138,7 @@ function Home() {
             fullWidth
             mt={{ base: "xl", md: 48 }}
             onClick={() => handleTouching()}
-            p="md"
+            p={{ base: "sm", md: "md" }}
             styles={(theme) => ({
               root: {
                 boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.1)",
