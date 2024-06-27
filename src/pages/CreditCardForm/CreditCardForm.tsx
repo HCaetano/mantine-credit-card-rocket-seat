@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from "react";
 import { ActionIcon, Flex, Text } from "@mantine/core";
 import { DatePickerInput, DateValue } from "@mantine/dates";
 import { IconQuestionMark } from "@tabler/icons-react";
+import { Dispatch, SetStateAction } from "react";
 import { TextInputCustom } from "../../components";
 
 type CreditCardFormType = {
@@ -33,7 +33,7 @@ function CreditCardForm(props: CreditCardFormType) {
         </Text>
         <TextInputCustom
           placeholder="4716 8039 0211 9321"
-          type="number"
+          type="text"
           {...formik.getFieldProps("cardNumber")}
         />
         <Text
