@@ -1,9 +1,9 @@
-import ReactCardFlip from "react-card-flip";
 import { Box, Flex, Image, Text, TextInput } from "@mantine/core";
-import { handleDateFormat } from "../../utils";
+import ReactCardFlip from "react-card-flip";
 import BackgroundBlur from "../../assets/Background-blur.png";
 import ContactlessPayment from "../../assets/Contactless-payment.svg";
 import VisaLogo from "../../assets/Visa.svg";
+import { handleDateFormat } from "../../utils";
 
 export type CreditCardType = {
   cardNumber: string;
